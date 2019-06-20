@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Metabolism Network</title>
+<link href="webjars/bootstrap/4.1.0/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+
+<header>
+	<div th:replace="header :: header"></div>
+</header>
+
+<body>
+
+	<div class="container">
+		<div>
+			<img th:src="@{/img/edmonton_picture.jpg}" width="100%" height="35%"
+				alt="">
+		</div>
+
+		<div class="container">
+			<h2>Contact / Feedback</h2>
+			<hr>
+			<div class="jumbotron">
+				<h2>
+					<span class="glyphicon glyphicon-envelope"> </span> Contact Us
+				</h2>
+				<p>We would love to hear your feedback, suggestions, or reports
+					on errors or inconsistencies. Please use our lab's Feedback Form
+					and we will direct your message to the appropriate expert.</p>
+				<p class="contact-link">
+					<a class="btn btn-primary" href="http://feedback.wishartlab.com/"
+						target="_blank"> <span class="glyphicon glyphicon-envelope">
+					</span> Questions / Feedback Form
+					</a>
+				</p>		
+			</div>
+			
+		</div>
+</body>
+
+
+
+
+<footer>
+	<!-- <div th:replace="footer :: footer"></div> -->
+	<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+	<script src="webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</footer>
+</html>

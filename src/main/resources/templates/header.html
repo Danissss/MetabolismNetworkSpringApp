@@ -1,0 +1,80 @@
+<div th:fragment="header">
+
+
+	<!-- navbar -->
+	
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="/">
+			<img th:src="@{/img/mn.jpg}" width="35" height="35" alt="" >
+		</a>
+		<b style="font-size:25px;"> Metabolism Network </b>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto">
+				<!-- Product -->
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> Products </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<!-- <a class="dropdown-item" href="#">Metabolism Network</a>  -->
+						<a class="dropdown-item" href="/phase1som">SOM Predictor </a>
+						<a class="dropdown-item" href="/cypreact">CypReact </a>
+						<a class="dropdown-item" href="/transporter">DrugExporter</a>
+						<!-- <a class="dropdown-item" href="/nmrpred">NMR-Pred</a> -->
+						<!-- <div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a> -->
+					</div>
+				</li>
+				<!-- New Room -->
+				<!-- <li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> News </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Events</a> 
+						<a class="dropdown-item" href="#">Publications</a>
+						<a class="dropdown-item" href="#">Presentations</a>
+					</div>
+				</li> -->
+				<!-- about us -->
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> About </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="/about">About us</a> 
+						<!-- <a class="dropdown-item" href="#">Collaborations</a> -->
+						<a class="dropdown-item" href="http://www.wishartlab.com/">Wishart Research Group</a>
+					</div>
+				</li>
+				
+				<!-- Support -->
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false"> Supports </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<!-- <a class="dropdown-item" href="/tutorial">Tutorial</a> 
+						<a class="dropdown-item" href="/FAQ">FAQ</a> -->
+						<a class="dropdown-item" href="/downloads">Downloads</a>
+						<a class="dropdown-item" href="/statistics">Statistics</a>
+						<a class="dropdown-item" href="/contactus"> Contact us</a>
+					</div>
+				</li>
+				
+				<!-- my account  -->
+				<!-- <li class="nav-item"><a class="nav-link" href="#">My Account</a></li> -->
+				<li class="nav-item"><a class="nav-link">V.1.0</a></li>
+			</ul>
+		</div>
+	</nav>
+
+
+</div>

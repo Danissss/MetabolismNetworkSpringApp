@@ -1,0 +1,208 @@
+<html>
+<head>
+<title>Transporter Prediction</title>
+<link href="webjars/bootstrap/4.1.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="marvin4js/gui/lib/promise-1.0.0.min.js"></script>
+<script src="marvin4js/js/marvinjslauncher.js"></script>
+<script src="js/phase1somQuery.js"></script>
+
+</head>
+
+<header>
+	<div th:replace="header :: header"></div>
+</header>
+
+<body>
+	<!-- Introduction -->
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-5">Site of Metabolism (SOM) Predictor</h1>
+			<p class="lead">
+				This program contain 9 trained random forest model for most
+				important Cytochrome P450 enzymes 
+				<br/> The 3D confirmation is calculated by <a
+					href="https://www.rdkit.org/docs/GettingStartedInPython.html#list-of-available-descriptors">RDKit</a>
+				Python package. 
+				<br/> The atom descriptor is calculated by <a
+					href="https://cdk.github.io/">Chemistry Development Kit (CDK)</a> Java package.
+			</p>
+			<hr class="my-1">
+			<p>More Information about the model please see the publication <a
+					href="#">[PubMed]</a> <a href="#">[ACS]</a> AND <a href="#">Model Statistics</a>
+			</p>
+		</div>
+	</div>
+
+	<!-- Form -->
+	<div class="container">
+		
+		<div class="row">
+		<div class="col">
+		
+		<form class="form-horizontal" id="submit-request">
+		
+		<div class="container">
+			<p>
+				Select Enzyme <span>=></span>
+				<select id="cyp-select">
+					<option value="CYP1A2">CYP1A2</option>
+					<option value="CYP2A1">CYP2A1</option>
+					<option value="CYP2A6">CYP2A6</option>
+					<option value="CYP2C8">CYP2C8</option>
+					<option value="CYP2C9">CYP2C9</option>
+					<option value="CYP2C19">CYP2C19</option>
+					<option value="CYP2D6">CYP2D6</option>
+					<option value="CYP2E1">CYP2E1</option>
+					<option value="CYP3A4">CYP3A4</option>
+					
+					<!-- <option value="MRP3">MRP3</option>
+					<option value="MRP4">MRP4</option> -->
+				</select>
+			</p>
+			<p id="protein-info"></p>
+			<!-- insert the protein information here -->
+		</div>
+
+		
+		<div class="container">
+		<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+			<li class="nav-item"><a class="nav-link active"
+				id="pills-home-tab" data-toggle="pill" href="#pills-chemdraw" role="tab"
+				aria-controls="pills-chemdraw" aria-selected="true">ChemDraw</a></li>
+			<li class="nav-item"><a class="nav-link" id="pills-profile-tab"
+				data-toggle="pill" href="#pills-smiles" role="tab"
+				aria-controls="pills-smiles" aria-selected="false">SMILES</a></li>
+			<li class="nav-item"><a class="nav-link" id="pills-contact-tab"
+				data-toggle="pill" href="#pills-sdf" role="tab"
+				aria-controls="pills-sdf" aria-selected="false">Upload File</a></li>
+		</ul>
+		<div class="tab-content" id="pills-tabContent">
+			
+			<div class="tab-pane fade show active" id="pills-chemdraw"
+				role="tabpanel" aria-labelledby="pills-home-tab">
+				<div>
+					<iframe src="marvin4js/editor.html" id="sketch" width="450px" 
+                    		height="300px" style="border:1px solid #b3b3b3;" ></iframe>
+                    		
+                </div>
+                <text name="sdf_content" style="display:none;"></text>
+				
+				
+			</div>
+			
+			<div class="tab-pane fade" id="pills-smiles" role="tabpanel"
+				aria-labelledby="pills-profile-tab">
+				<!-- <p>Load Example</p> -->
+				<p>SMILES = <input type="text" id="smiles-string" style="width: 350px;"/></p>
+			</div>
+			
+			<div class="tab-pane fade" id="pills-sdf" role="tabpanel"
+				aria-labelledby="pills-contact-tab">
+				<!-- <p>Load Example</p> -->
+				<input id="fileupload" name="file" type="file" />
+			</div>
+		</div>
+		</div>
+
+
+		<!-- https://medium.com/@grokwich/spring-boot-thymeleaf-html-form-handling-762ef0d51327 -->
+		
+		<div class="container">
+			<button class="btn btn-primary btn-sml" type="submit" id="bth-search">
+				Submit
+			</button>
+		</div>
+		
+		</form>
+		</div>
+		
+		
+		
+		<div class="col">
+		
+			<div class="result">
+			</div>
+			
+			<div class="show-image">
+				<!-- image has to be linked to path first -->
+				<!-- <img alt="" src="/compoundImages/sadf.png"> -->
+			</div>
+			
+			
+			<div class="debug-info"></div>
+			
+		</div>
+		
+		
+		</div>
+		
+		
+	</div>
+	
+</body>
+
+
+
+
+<footer>
+
+	<script type="text/javascript">
+		var marvinSketcherInstance;
+		MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
+			marvinSketcherInstance = sketcherInstance;
+			marvinSketcherInstance.importStructure("mol", s).catch(function(error) {
+				alert(error);
+			});
+			}, function(error) {
+				alert("Loading of the sketcher failed"+error);
+	    }); 
+		
+		var s = "\n\n\n"+
+		" 18 18  0     0  0  0  0  0  0999 V2000\n"+
+		"    4.3579    0.4145    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -0.4363   -0.2819    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -0.8263    1.0571    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -1.3970   -1.2865    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -2.1772    1.3916    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -2.7479   -0.9521    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    0.9725   -0.6306    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -3.1379    0.3870    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    2.0042    0.1995    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    3.3880   -0.2986    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -0.1150    1.8710    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -1.1121   -2.3357    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    1.1820   -1.6553    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -2.4820    2.4339    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -3.4962   -1.7341    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -4.1899    0.6473    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    1.8888    1.2254    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    3.5005   -1.3484    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"  1 10  2  0  0  0  0\n"+
+		"  2  3  2  0  0  0  0\n"+
+		"  2  4  1  0  0  0  0\n"+
+		"  2  7  1  0  0  0  0\n"+
+		"  3  5  1  0  0  0  0\n"+
+		"  3 11  1  0  0  0  0\n"+
+		"  4  6  2  0  0  0  0\n"+
+		"  4 12  1  0  0  0  0\n"+
+		"  5  8  2  0  0  0  0\n"+
+		"  5 14  1  0  0  0  0\n"+
+		"  6  8  1  0  0  0  0\n"+
+		"  6 15  1  0  0  0  0\n"+
+		"  7  9  2  0  0  0  0\n"+
+		"  7 13  1  0  0  0  0\n"+
+		"  8 16  1  0  0  0  0\n"+
+		"  9 10  1  0  0  0  0\n"+
+		"  9 17  1  0  0  0  0\n"+
+		" 10 18  1  0  0  0  0\n"+
+		"M  END\n";
+	</script>
+
+	<div th:replace="footer :: footer"></div>
+	
+
+</footer>
+</html>

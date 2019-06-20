@@ -1,0 +1,230 @@
+<html>
+<head>
+<title>CypReact</title>
+<link href="webjars/bootstrap/4.1.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="marvin4js/gui/lib/promise-1.0.0.min.js"></script>
+<script src="marvin4js/js/marvinjslauncher.js"></script>
+<script src="js/CypReactQuery.js"></script>
+
+<!-- customized script; later refactor to independent file -->
+<style>
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+</style>
+
+</head>
+
+<header>
+	<div th:replace="header :: header"></div>
+</header>
+
+<body>
+	<!-- Introduction -->
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-5">CypReact</h1>
+			<p class="lead">
+				CypReact, for performing this first task of reactant prediction.
+				Specifically, CypReact takes as input an arbitrary molecule
+				(specified as a SMILES string or a standard SDF file) and any one of
+				the nine of the most important human cytochrome P450 (CYP450)
+				enzymes-CYP1A2, CYP2A6, CYP2B6, CYP2C8, CYP2C9, CYP2C19, CYP2D6,
+				CYP2E1, or CYP3A4-and accurately predicts whether the query molecule
+				will react with that given CYP450 enzyme. Tests of CypReact,
+				conducted over a data set of 1632 molecules (each considered a
+				"plausible" reactant) show that it is very effective, with a
+				(cross-validation) AUROC (area under the receiver operating
+				characteristic curve) of 0.83-0.92. We also show that CypReact
+				performs significantly better than other reactant prediction tools
+				such as ADMET Predictor and (a reactant-predicting extension of)
+				SMARTCyp, whose average AUROCs are 0.75 and 0.53, respectively.<br />
+				The 2D descriptors used are calculated from <a
+					href="https://cdk.github.io/">CDK</a>
+			</p>
+			<hr class="my-1">
+			<p>
+				More Information about the model please see the publication <a
+					href="https://www.ncbi.nlm.nih.gov/pubmed/29738669">[PubMed]</a> <a
+					href="https://pubs.acs.org/doi/10.1021/acs.jcim.8b00035">[ACS]</a>
+			</p>
+		</div>
+	</div>
+
+	<!-- Form -->
+	<div class="container">
+
+		<div class="row">
+			<div class="col">
+
+				<form class="form-horizontal" id="submit-request">
+					<!-- <form action="#" th:action="@{/}" th:object="@{TransporterModel}" method="post"> -->
+					<!-- Select transporter based on protein name -->
+					<div class="container">
+						<p>
+							Select Enyzme For Prediction <br> <input type="checkbox"
+								name="CYP1A2" value="CYP1A2" id="CYP1A2" checked> CYP1A2
+							<input type="checkbox" name="CYP2B6" value="CYP2B6" id="CYP2B6">
+							CYP2B6 <input type="checkbox" name="CYP2A6" value="CYP2A6"
+								id="CYP2A6"> CYP2A6 <input type="checkbox" name="CYP2C8"
+								value="CYP2C8" id="CYP2C8"> CYP2C8 <br> <input
+								type="checkbox" name="CYP2C9" value="CYP2C9" id="CYP2C9">
+							CYP2C9 <input type="checkbox" name="CYP2C19" value="CYP2C19"
+								id="CYP2C19"> CYP2C19 <input type="checkbox"
+								name="CYP2D6" value="CYP2D6" id="CYP2D6"> CYP2D6 <input
+								type="checkbox" name="CYP2E1" value="CYP2E1" id="CYP2E1">
+							CYP2E1 <br> <input type="checkbox" name="CYP3A4"
+								value="CYP3A4" id="CYP3A4"> CYP3A4
+
+
+						</p>
+						<p id="protein-info"></p>
+					</div>
+
+
+					<div class="container">
+						<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+							<li class="nav-item"><a class="nav-link active"
+								id="pills-home-tab" data-toggle="pill" href="#pills-chemdraw"
+								role="tab" aria-controls="pills-chemdraw" aria-selected="true">ChemDraw</a></li>
+							<li class="nav-item"><a class="nav-link"
+								id="pills-profile-tab" data-toggle="pill" href="#pills-smiles"
+								role="tab" aria-controls="pills-smiles" aria-selected="false">SMILES</a></li>
+							<li class="nav-item"><a class="nav-link"
+								id="pills-contact-tab" data-toggle="pill" href="#pills-sdf"
+								role="tab" aria-controls="pills-sdf" aria-selected="false">Upload
+									File</a></li>
+						</ul>
+						<div class="tab-content" id="pills-tabContent">
+
+							<div class="tab-pane fade show active" id="pills-chemdraw"
+								role="tabpanel" aria-labelledby="pills-home-tab">
+								<div>
+									<iframe src="marvin4js/editor.html" id="sketch" width="450px"
+										height="300px" style="border: 1px solid #b3b3b3;"></iframe>
+
+								</div>
+								<text name="sdf_content" style="display:none;"></text>
+
+
+							</div>
+
+							<div class="tab-pane fade" id="pills-smiles" role="tabpanel"
+								aria-labelledby="pills-profile-tab">
+
+								<p>
+									SMILES = <input type="text" id="smiles-string"
+										style="width: 350px;" />
+								</p>
+							</div>
+
+							<div class="tab-pane fade" id="pills-sdf" role="tabpanel"
+								aria-labelledby="pills-contact-tab">
+
+								<input id="fileupload" name="file" type="file" />
+							</div>
+						</div>
+					</div>
+
+
+					<!-- https://medium.com/@grokwich/spring-boot-thymeleaf-html-form-handling-762ef0d51327 -->
+
+					<div class="container">
+						<button class="btn btn-primary btn-sml" type="submit"
+							id="bth-search">Submit</button>
+					</div>
+
+				</form>
+			</div>
+
+
+
+			<div class="col">
+
+				<div class="result"></div>
+				<div class="debug-info"></div>
+
+			</div>
+
+
+		</div>
+
+
+	</div>
+
+
+
+
+
+
+
+</body>
+
+
+
+
+<footer>
+
+	<script type="text/javascript">
+		var marvinSketcherInstance;
+		MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
+			marvinSketcherInstance = sketcherInstance;
+			marvinSketcherInstance.importStructure("mol", s).catch(function(error) {
+				alert(error);
+			});
+			}, function(error) {
+				alert("Loading of the sketcher failed"+error);
+	    }); 
+		var s = "\n\n\n"+
+		" 17 16  0     1  0  0  0  0  0999 V2000\n"+
+		"    1.5719   -0.5512    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -1.5811    1.4029    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -1.6164   -0.3372    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -0.2020   -1.8251    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    1.3723   -0.0127    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n"+
+		"   -0.0250   -0.3698    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"+
+		"    1.6198    1.4889    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -1.1395    0.2043    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -0.1469   -0.0043    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    2.1279   -0.4625    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    2.6574    1.6877    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    1.4366    1.9697    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    0.9929    1.9647    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -1.0877   -2.0590    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    0.5254   -2.2541    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    2.4815   -0.3389    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -2.3052    1.7645    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"  1  5  1  0  0  0  0\n"+
+		"  1 16  1  0  0  0  0\n"+
+		"  2  8  1  0  0  0  0\n"+
+		"  2 17  1  0  0  0  0\n"+
+		"  3  8  2  0  0  0  0\n"+
+		"  4  6  1  0  0  0  0\n"+
+		"  4 14  1  0  0  0  0\n"+
+		"  4 15  1  0  0  0  0\n"+
+		"  5  6  1  0  0  0  0\n"+
+		"  5  7  1  0  0  0  0\n"+
+		"  5 10  1  0  0  0  0\n"+
+		"  6  8  1  0  0  0  0\n"+
+		"  6  9  1  0  0  0  0\n"+
+		"  7 11  1  0  0  0  0\n"+
+		"  7 12  1  0  0  0  0\n"+
+		"  7 13  1  0  0  0  0\n"+
+		"M  END\n";
+	</script>
+	<div th:replace="footer :: footer"></div>
+
+
+</footer>
+</html>

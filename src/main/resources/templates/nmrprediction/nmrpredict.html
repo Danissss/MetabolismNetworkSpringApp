@@ -1,0 +1,176 @@
+<html>
+<head>
+<title>Transporter Prediction</title>
+<link href="webjars/bootstrap/4.1.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="marvin4js/gui/lib/promise-1.0.0.min.js"></script>
+<script src="marvin4js/js/marvinjslauncher.js"></script>
+
+
+<!-- customized script; later refactor to independent file -->
+<script>
+	
+	// button color functionality
+	$("select").change(function(){
+		var str = "";
+		
+		$("select option:selected").each(function(){
+			str += $(this).text()+" ";
+		});
+		alert(str);
+		$('#protein-info').text(str);
+	}).trigger("change");
+	
+
+</script>
+
+</head>
+
+<header>
+	<div th:replace="header :: header"></div>
+</header>
+
+<body>
+	<!-- Introduction -->
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-5">NMR Pred</h1>
+			<p class="lead">
+				This program contain 10 trained random forest model for predicting NMR shift
+				<br/> The 3D confirmation is calculated by <a
+					href="https://www.rdkit.org/docs/GettingStartedInPython.html#list-of-available-descriptors">RDKit</a>
+				Python package. 
+				<br/> The atom descriptor is calculated by <a
+					href="https://cdk.github.io/">Chemistry Development Kit (CDK)</a> Java package.
+				<br/> The spin library is from <a href="http://spindynamics.org/Spinach-examples.php">Theoretical Spin Dynamics Group</a>
+			</p>
+			<hr class="my-1">
+			<p>More Information about the model please see the publication <a
+					href="#">[PubMed]</a> <a href="#">[ACS]</a> AND <a href="#">Model Statistics</a>
+			</p>
+		</div>
+	</div>
+
+	<!-- Form -->
+	<div class="container">
+		
+		<div class="row">
+		<div class="col">
+		
+		<form class="form-horizontal" id="submit-request" th:action="@{/nmrpred/result}" th:object="${NmrPredModel}"
+		method="post">
+		
+		<div class="container">
+			<p>
+				Select Solvent <span>=></span>
+				<select id="solvent-select">
+					<option value="Acetone">Acetone</option>
+					<option value="Chloroform">Chloroform</option>
+					<option value="Dimethylsulphoxide1H">Dimethylsulphoxide</option>
+					<option value="Methanol">Methanol</option>
+					<option value="Water">Water</option>
+				</select>
+			</p>
+			<p id="protein-info"></p>
+			<!-- insert the protein information here -->
+		</div>
+		
+		<div class="container">
+			<p>
+				Select Nucleus <span>=></span>
+				<select id="nucleus-select">
+					<option value="carbon">13C</option>
+					<option value="hydrogen">1H</option>
+				</select>
+			</p>
+		</div>
+		
+		
+		<div class="container">
+		<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+			<li class="nav-item"><a class="nav-link active"
+				id="pills-home-tab" data-toggle="pill" href="#pills-chemdraw" role="tab"
+				aria-controls="pills-chemdraw" aria-selected="true">ChemDraw</a></li>
+			<li class="nav-item"><a class="nav-link" id="pills-profile-tab"
+				data-toggle="pill" href="#pills-smiles" role="tab"
+				aria-controls="pills-smiles" aria-selected="false">SMILES</a></li>
+			<li class="nav-item"><a class="nav-link" id="pills-contact-tab"
+				data-toggle="pill" href="#pills-sdf" role="tab"
+				aria-controls="pills-sdf" aria-selected="false">Upload File</a></li>
+		</ul>
+		<div class="tab-content" id="pills-tabContent">
+			
+			<div class="tab-pane fade show active" id="pills-chemdraw"
+				role="tabpanel" aria-labelledby="pills-home-tab">
+				<div>
+					<iframe src="marvin4js/editor.html" id="sketch" width="450px" 
+                    		height="300px" style="border:1px solid #b3b3b3;" ></iframe>
+                    		
+                </div>
+                <text name="sdf_content" style="display:none;" th:field="*{MolBlock}"></text>
+				
+				
+			</div>
+			
+			<div class="tab-pane fade" id="pills-smiles" role="tabpanel"
+				aria-labelledby="pills-profile-tab">
+
+				<p><input type="text" id="smiles-string" th:field="*{SMILES}"/></p>
+			</div>
+			
+			<div class="tab-pane fade" id="pills-sdf" role="tabpanel"
+				aria-labelledby="pills-contact-tab">
+				<!-- <p>Load Example</p> -->
+				<input id="fileupload" name="file" type="file" />
+			</div>
+		</div>
+		</div>
+
+
+		<!-- https://medium.com/@grokwich/spring-boot-thymeleaf-html-form-handling-762ef0d51327 -->
+		
+		<div class="container">
+			<button class="btn btn-primary btn-sml" type="submit" id="bth-search">
+				Submit
+			</button>
+		</div>
+		
+		</form>
+		</div>
+		
+		
+		
+		<div class="col">
+		
+			<div class="result"></div>
+			
+			
+			<div class="debug-info"></div>
+			
+		</div>
+		</div>
+	</div>
+	
+</body>
+
+
+
+
+<footer>
+
+	<script type="text/javascript">
+		var marvinSketcherInstance;
+		MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
+			marvinSketcherInstance = sketcherInstance;
+			}, function(error) {
+				alert("Loading of the sketcher failed"+error);
+	    }); 
+	</script>
+
+	<div th:replace="footer :: footer"></div>
+	
+
+</footer>
+</html>

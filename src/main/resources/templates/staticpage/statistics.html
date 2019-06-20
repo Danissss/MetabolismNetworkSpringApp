@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>Statistics</title>
+<link href="webjars/bootstrap/4.1.0/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+
+<style>
+table {
+	border-collapse: collapse;
+	width: 100%;
+	margin-left:5%;
+}
+
+th, td {
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+</style>
+<header>
+	<div th:replace="header :: header"></div>
+
+</header>
+
+
+
+<body>
+
+	<div class="container">
+		<div>
+			<img th:src="@{/img/edmonton_picture.jpg}" width="100%" height="35%"
+				alt="">
+		</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+					<ul class="nav flex-column flex-nowrap">
+						<li class="nav-item active"><a class="nav-link active"
+							id="overview-tab" data-toggle="tab" href="#overview" role="tab"
+							aria-controls="overview" aria-selected="true"
+							aria-expanded="true">SOMPredictor</a></li>
+						<li class="nav-item"><a class="nav-link" id="prediction-tab"
+							data-toggle="tab" href="#prediction_help" role="tab"
+							aria-controls="prediction_help" aria-selected="true">
+								CypReact</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="identification-tab" data-toggle="tab"
+							href="#identification_help" role="tab"
+							aria-controls="identification_help" aria-selected="true">DrugExporter
+						</a></li>
+					</ul>
+				</div>
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="overview"
+						role="tabpanel" aria-labelledby="overview-tab">
+						<table id="sompredictor-table">
+							<tr>
+								<th>CYP450</th>
+								<td>CYP1A2</td>
+								<td>CYP2A6</td>
+								<td>CYP2B6</td>
+								<td>CYP2C8</td>
+								<td>CYP2C9</td>
+								<td>CYP2C19</td>
+								<td>CYP2D6</td>
+								<td>CYP2E1</td>
+								<td>CYP3A4</td>
+
+							</tr>
+							<tr>
+								<th>MCC</th>
+								<td>0.72</td>
+								<td>0.476</td>
+								<td>0.678</td>
+								<td>0.612</td>
+								<td>0.586</td>
+								<td>0.628</td>
+								<td>0.607</td>
+								<td>0.576</td>
+								<td>0.611</td>
+
+							</tr>
+							<tr>
+								<th>ROC Area</th>
+								<td>94.9%</td>
+								<td>88.6%</td>
+								<td>93.2%</td>
+								<td>90.7%</td>
+								<td>92.0%</td>
+								<td>93.1%</td>
+								<td>92.1%</td>
+								<td>90.6%</td>
+								<td>92.0%</td>
+							</tr>
+
+						</table>
+					</div>
+
+
+					<div class="tab-pane fade" id="prediction_help" role="tabpanel"
+						aria-labelledby="prediction-tab">
+						<table id="cypreact-table">
+							<tr>
+								<th>CYP450</th>
+								<td>CYP1A2</td>
+								<td>CYP2A6</td>
+								<td>CYP2B6</td>
+								<td>CYP2C8</td>
+								<td>CYP2C9</td>
+								<td>CYP2C19</td>
+								<td>CYP2D6</td>
+								<td>CYP2E1</td>
+								<td>CYP3A4</td>
+
+							</tr>
+							<tr>
+								<th>ROC Area</th>
+								<td>86.0%</td>
+								<td>84.0%</td>
+								<td>86.0%</td>
+								<td>84.0%</td>
+								<td>83.0%</td>
+								<td>83.0%</td>
+								<td>87.0%</td>
+								<td>87.0%</td>
+								<td>92.0%</td>
+
+							</tr>
+
+						</table>
+					</div>
+
+					<div class="tab-pane fade" id="identification_help" role="tabpanel"
+						aria-labelledby="identification-tab"></div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+
+
+
+<footer>
+	<!-- <div th:replace="footer :: footer"></div> -->
+	<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+	<script src="webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</footer>
+</html>
