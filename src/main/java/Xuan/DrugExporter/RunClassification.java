@@ -57,11 +57,15 @@ public class RunClassification {
 			// have to ensure user that the input has to be standard
 			if (error = stdError.readLine() != null) {
 				if(error == true) {
+					System.out.println("Error readlines.");
+					System.out.println(stdError.readLine());
 					return null;
 					}
 				}
 			
 			while ((s = stdInput.readLine()) != null) {
+				
+				System.out.println(s);
 				String[] descriptorValue = s.split(",");
 //				System.out.println(Arrays.toString(descriptorValue));
 //				System.out.println(Arrays.toString(descriptorValue));
@@ -102,9 +106,13 @@ public class RunClassification {
 	 */
 	@SuppressWarnings("deprecation")
 	public Instances CreateTestingInstance(String option, String input, String model_type) {
-		
+		System.out.println("Enter CreateTestingInstance Function");
 		
 		ArrayList<Double> descriptorValue = GetRawInput(option,input);
+		System.out.println(descriptorValue.size());
+//		for (int i = 0; i < descriptorValue.size(); i++) {
+//			System.out.println(i);
+//		}
 		int descriptorValueLength = descriptorValue.size();
 		ArrayList<Attribute> attribute_al = GenerateAttributeName(descriptorValueLength);
 		

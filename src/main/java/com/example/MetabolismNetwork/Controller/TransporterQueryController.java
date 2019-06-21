@@ -92,10 +92,10 @@ public class TransporterQueryController {
 					
 					if(mol != null && mol.getAtomCount() > 0) {
 						String smiles = ReadMolecule.ConvertIAtomContainerToSmiles(mol);
-						System.out.println(smiles);
 						if(smiles.contains(".")) {
 							result.setErrorMsg("The compound is not connected!");
 						}else {
+							
 							Instances testinstance = newclassifier.CreateTestingInstance("-s", smiles, submit.role);
 							String result_role = newclassifier.ClassifyInstance(submit.role, submit.protein, testinstance);
 							result.setPredictedRole(result_role);
@@ -177,7 +177,7 @@ public class TransporterQueryController {
 						smiles = sg.create(molecule);
 						
 						if (smiles != null) {
-							
+							//TODO: change substrate to the options that user selected
 							Instances testinstance = newclassifier.CreateTestingInstance("-s", smiles, "substrate");
 									
 							try {
