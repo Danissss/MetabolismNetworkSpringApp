@@ -233,7 +233,7 @@ public class SomPrediction {
     		 			feature_set.setValue(tmp_attr,Double.parseDouble(single_instance_value.get(f)));
 //    		 			feature_set.setValue(tmp_attr, single_instance_value.get(f));
     		 		}else if (tmp_attr.isNominal()) {
-    		 			System.out.println(single_instance_value.get(f));
+    		 			// System.out.println(single_instance_value.get(f));
     		 			feature_set.setValue(tmp_attr, single_instance_value.get(f));
     		 		}
     			 

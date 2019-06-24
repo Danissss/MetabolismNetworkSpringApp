@@ -153,7 +153,8 @@ public class TransporterQueryController {
 		
 		TransporterAjaxResponseBody result = new TransporterAjaxResponseBody();
 		RunClassification newclassifier = new RunClassification();
-		
+		System.out.println(role);
+		System.out.println(protein);
 		if(multipartFile!=null) {
 			System.out.println("get file step");
 			if(!multipartFile.getOriginalFilename().isEmpty()) {
@@ -178,7 +179,7 @@ public class TransporterQueryController {
 						
 						if (smiles != null) {
 							//TODO: change substrate to the options that user selected
-							Instances testinstance = newclassifier.CreateTestingInstance("-s", smiles, "substrate");
+							Instances testinstance = newclassifier.CreateTestingInstance("-s", smiles, role);
 									
 							try {
 								String result_role = newclassifier.ClassifyInstance(role, protein, testinstance);

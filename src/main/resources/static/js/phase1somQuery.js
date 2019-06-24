@@ -17,6 +17,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		var smiles = $("#smiles-string").val();
 		var file = $("#fileupload").val();
+		$('#generated-image').remove();
 		if (smiles != "") {
 			console.log("smiles=> " + smiles);
 			fire_ajax_submit();
@@ -92,10 +93,9 @@ function fire_ajax_submit_with_file() {
 						$('#bth-search').prop("disabled", false);
 					} else if (data.success === true) {
 						var json = "<pre>Success: Atom(s) with red color is the predicted site of metabolism </pre>";
-						var images_div = "<img src=\"" + data.image_path
+						var images_div = "<img id=\"generated-image\" src=\"" + data.image_path
 								+ "\" height=\"360px\" width=\"360px\">";
 						$('.result').html(json);
-						$('.show-image').removeAttr('img');
 						$('.show-image').append(images_div);
 
 					}
@@ -116,7 +116,6 @@ function fire_ajax_submit_with_file() {
 				}
 
 			});
-	3
 
 }
 
@@ -169,10 +168,9 @@ function fire_ajax_submit() {
 						$('#bth-search').prop("disabled", false);
 					} else if (data.success === true) {
 						var json = "<pre>Success: Atom(s) with red color is the predicted site of metabolism </pre>";
-						var images_div = "<img src=\"" + data.image_path
+						var images_div = "<img id=\"generated-image\" src=\"" + data.image_path
 								+ "\" height=\"360px\" width=\"360px\">";
 						$('.result').html(json);
-						$('.show-image').removeAttr('img');
 						$('.show-image').append(images_div);
 
 					}
