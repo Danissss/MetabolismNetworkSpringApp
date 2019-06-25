@@ -210,11 +210,32 @@ public class CypReactQueryController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/cypreactwithfile")
 	@ResponseBody
-	public ResponseEntity<?> getSearchResultViaAjaxFile(@RequestParam("file") MultipartFile multipartFile){
+	public ResponseEntity<?> getSearchResultViaAjaxFile(@RequestParam("file") MultipartFile multipartFile,
+			@RequestParam("CYP1A2") String CYP1A2,
+			@RequestParam("CYP2B6") String CYP2B6,
+			@RequestParam("CYP2A6") String CYP2A6,
+			@RequestParam("CYP2C8") String CYP2C8,
+			@RequestParam("CYP2C9") String CYP2C9,
+			@RequestParam("CYP2C19") String CYP2C19,
+			@RequestParam("CYP2D6") String CYP2D6,
+			@RequestParam("CYP2E1") String CYP2E1,
+			@RequestParam("CYP3A4") String CYP3A4){
 		
 		CypReactAjaxResponseBody result = new CypReactAjaxResponseBody();
 		ReactantPred CypReact = new ReactantPred();
 		String supportFoldPath = String.format("%s/", System.getProperty("user.dir"));
+		
+		// add all enzyme 
+		ArrayList<String> enzyme = new ArrayList<String>();
+		if(!CYP1A2.equals("null")) {enzyme.add(CYP1A2);}
+		if(!CYP2B6.equals("null")) {enzyme.add(CYP2B6);}
+		if(!CYP2A6.equals("null")) {enzyme.add(CYP2A6);}
+		if(!CYP2C8.equals("null")) {enzyme.add(CYP2C8);}
+		if(!CYP2C9.equals("null")) {enzyme.add(CYP2C9);}
+		if(!CYP2C19.equals("null")) {enzyme.add(CYP2C19);}
+		if(!CYP2D6.equals("null")) {enzyme.add(CYP2D6);}
+		if(!CYP2E1.equals("null")) {enzyme.add(CYP2E1);}
+		if(!CYP3A4.equals("null")) {enzyme.add(CYP3A4);}
 		
 		if(multipartFile!=null) {
 			System.out.println("get file step");
@@ -239,16 +260,14 @@ public class CypReactQueryController {
 						smiles = sg.create(molecule);
 						
 						if (smiles != null) {
-							
+							// System.out.println("file step smiles " + smiles);
 							Instances testinstance = CypReact.CreateTestInstances(String.format("SMILES=%s", smiles));
 							IAtomContainerSet inputMolecule = CypReact.CreateInputMolecule(String.format("SMILES=%s", smiles));
 							ArrayList<HashMap<String, String>> classifiedResult = new ArrayList<HashMap<String, String>>();
 							
 									
 							if (testinstance != null && inputMolecule !=null) {
-								//TODO: figure out add the submit CypReactSubmitCriteria
-								ArrayList<String> enzyme = new ArrayList<String>();
-								// System.out.println("enzyme size : " + enzyme.size());
+								
 								
 								for (int i = 0; i < enzyme.size(); i++) {
 									try {

@@ -8,6 +8,8 @@ $("select").change(function() {
 	$('#protein-info').text(str);
 }).trigger("change");
 
+
+
 $(document).ready(function() {
 	$("#submit-request").submit(function(event) {
 		event.preventDefault();
@@ -39,7 +41,13 @@ $(document).ready(function() {
 		}
 
 	});
+	
+	
 });
+
+
+
+
 
 function fire_ajax_submit() {
 
@@ -153,35 +161,41 @@ function fire_ajax_submit_with_file() {
 	// check box for enzyme
 	// reference for optional params
 	// http://codeflex.co/java-spring-rest-api-with-empty-or-optional-parameters/
-
 	if ($("#CYP1A2:checked").length > 0) {
-		/* predict["CYP1A2"] = $("#CYP1A2").val(); */
 		MyForm.append("CYP1A2", $("#CYP1A2").val());
-	}
+	}else{MyForm.append("CYP1A2","null");}
+	
 	if ($("#CYP2B6:checked").length > 0) {
-		predict["CYP2B6"] = $("#CYP2B6").val();
-	}
+		MyForm.append("CYP2B6", $("#CYP2B6").val());
+	}else{MyForm.append("CYP2B6","null");}
+	
 	if ($("#CYP2A6:checked").length > 0) {
-		predict["CYP2A6"] = $("#CYP2A6").val();
-	}
+		MyForm.append("CYP2A6", $("#CYP2A6").val());
+	}else{MyForm.append("CYP2A6","null");}
+	
 	if ($("#CYP2C8:checked").length > 0) {
-		predict["CYP2C8"] = $("#CYP2C8").val();
-	}
+		MyForm.append("CYP2C8", $("#CYP2C8").val());
+	}else{MyForm.append("CYP2C8","null");}
+	
 	if ($("#CYP2C9:checked").length > 0) {
-		predict["CYP2C9"] = $("#CYP2C9").val();
-	}
+		MyForm.append("CYP2C9", $("#CYP2C9").val());
+	}else{MyForm.append("CYP2C9","null");}
+	
 	if ($("#CYP2C19:checked").length > 0) {
-		predict["CYP2C19"] = $("#CYP2C19").val();
-	}
+		MyForm.append("CYP2C19", $("#CYP2C19").val());
+	}else{MyForm.append("CYP2C19","null");}
+	
 	if ($("#CYP2D6:checked").length > 0) {
-		predict["CYP2D6"] = $("#CYP2D6").val();
-	}
+		MyForm.append("CYP2D6", $("#CYP2D6").val());
+	}else{MyForm.append("CYP2D6","null");}
+	
 	if ($("#CYP2E1:checked").length > 0) {
-		predict["CYP2E1"] = $("#CYP2E1").val();
-	}
+		MyForm.append("CYP2E1", $("#CYP2E1").val());
+	}else{MyForm.append("CYP2E1","null");}
+	
 	if ($("#CYP3A4:checked").length > 0) {
-		predict["CYP3A4"] = $("#CYP3A4").val();
-	}
+		MyForm.append("CYP3A4", $("#CYP3A4").val());
+	}else{MyForm.append("CYP3A4","null");}
 
 	$("#btn-search").prop("disabled", true);
 
