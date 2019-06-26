@@ -1,9 +1,58 @@
-<div th:fragment="footer">
-	
-	
-	<p style="text-align: center;">
-		Metabolism Network (metabolismnet.ca) is a joint web presence of Metabolism Net Inc. and <br/>
-		<a href="http://www.wishartlab.com/">Wishart Lab</a>. All rights reserved.
-	</p>
-	
-</div>
+<footer th:fragment="footer" class="page-footer font-small blue pt-4">
+	<hr>
+	<!-- Footer Links -->
+	<div class="container-fluid text-center text-md-left">
+
+		<!-- Grid row -->
+		<div class="row">
+
+			<div class="col-md-6 mt-md-0 mt-3">
+				<p>
+					This project is supported by the <a
+						href="http://www.cihr-irsc.gc.ca" target="_blank">Canadian
+						Institutes of Health Research</a>, <a href="https://www.innovation.ca"
+						target="_blank">Canada Foundation for Innovation</a>, and by <a
+						href="http://www.metabolomicscentre.ca/" target="_blank">The
+						Metabolomics Innovation Centre (TMIC)</a>, a nationally-funded
+					research and core facility that supports a wide range of
+					cutting-edge metabolomic studies. TMIC is funded by <a
+						href="http://www.genomecanada.ca" target="_blank">Genome
+						Canada</a>, <a href="http://www.genomealberta.ca" target="_blank">Genome
+						Alberta</a>, and <a href="http://www.genomebc.ca/" target="_blank">Genome
+						British Columbia</a>, a not-for-profit organization that is leading
+					Canada's national genomics strategy with $900 million in funding
+					from the federal government.
+				</p>
+
+			</div>
+			<!-- Grid column -->
+
+			<hr class="clearfix w-100 d-md-none pb-3">
+
+			<!-- Grid column -->
+			<div class="col-md-6 mb-md-0 mb-3">
+				<ul class="list-unstyled" style="display:flex;">
+					<li><a href="https://www.metabolomicscentre.ca/" target="_blank" ><img
+						th:src="@{/img/TMIC.png}" width="180px" height="80px"></a></li>
+					<li><a href="https://www.innovation.ca/" target="_blank"><img
+						th:src="@{/img/INNOVACANADA.png}" width="150px" height="80px"></a></li>
+				</ul>
+				<ul class="list-unstyled" style="display:flex;">
+					<li><a href="https://www.genomecanada.ca/" target="_blank"><img
+						th:src="@{/img/G_Canada.png}" width="100px" height="50px"></a></li>
+					<li><a href="http://genomealberta.ca/" target="_blank"><img
+						th:src="@{/img/G_Alberta.png}" width="100px" height="50px"></a></li>
+					<li><a href="https://genomebc.ca" target="_blank"><img
+						th:src="@{/img/G_BC.png}" width="100px" height="50px"></a></li>
+					<li><a href="http://www.cihr-irsc.gc.ca/" target="_blank"><img
+						th:src="@{/img/CIHR.png}" width="100px" height="50px"></a></li>
+				</ul>
+
+			</div>
+			<!-- Grid column -->
+
+		</div>
+		<!-- Grid row -->
+
+	</div>
+</footer>
