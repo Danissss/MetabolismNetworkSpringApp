@@ -148,7 +148,7 @@ public class SdfToSample {
 		Instances userinput = new Instances("Rel", atts, 100000);
 		int length = atts.size();
 		for(int idx = 0; idx<set.getAtomContainerCount();idx++){
-		  System.out.println("Processing Molecue: " + (idx+1));
+		  // System.out.println("Processing Molecue: " + (idx+1));
 		  String result = generateOneinstanceFeatures(set.getAtomContainer(idx));
 		  String[] temp = result.split("\t");
 		  Instance sample = new DenseInstance(length); 

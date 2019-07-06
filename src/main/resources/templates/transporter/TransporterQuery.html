@@ -70,7 +70,7 @@
 
 			</p>
 		</div>
-
+		</form>
 
 
 		
@@ -97,7 +97,8 @@
                     		
                 </div>
                 <text name="sdf_content" style="display:none;"></text>
-				
+				<input class="btn btn-primary btn-sml" type="submit" id="bth-search-draw" form="submit-request" value="Submit">
+				<input class="btn btn-primary btn-sml" type="button" id="draw-load-example" value="Load Example">
 				
 			</div>
 			
@@ -105,12 +106,18 @@
 				aria-labelledby="pills-profile-tab">
 				
 				<p>SMILES = <input type="text" id="smiles-string" style="width: 350px;"/></p>
+				<br/>
+				<input class="btn btn-primary btn-sml" type="submit" id="bth-search-smiles" form="submit-request" value="Submit SMILES">
+				<input class="btn btn-primary btn-sml" type="button" id="smiles-load-example" value="Load Example">
 			</div>
 			
 			<div class="tab-pane fade" id="pills-sdf" role="tabpanel"
 				aria-labelledby="pills-contact-tab">
 				<p> Please make sure there is no input in SMILES section</p>
 				<input id="fileupload" name="file" type="file" />
+				<br/>
+				<input class="btn btn-primary btn-sml" type="submit" id="bth-search-sdf" form="submit-request" value="Submit File">
+				<input class="btn btn-primary btn-sml" type="button" id="sdf-load-example" value="Load Example">
 			</div>
 		</div>
 		</div>
@@ -118,13 +125,6 @@
 
 		<!-- https://medium.com/@grokwich/spring-boot-thymeleaf-html-form-handling-762ef0d51327 -->
 		
-		<div class="container">
-			<button class="btn btn-primary btn-sml" type="submit" id="bth-search">
-				Submit
-			</button>
-		</div>
-		
-		</form>
 		</div>
 		
 		

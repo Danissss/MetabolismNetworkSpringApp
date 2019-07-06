@@ -182,59 +182,59 @@ public class GetAtomicDescriptors {
 		return values;
 	}
 
-	/**
-	 * Calculate descriptors. Omits IPMolecularLearningDescriptor
-	 *
-	 * @param string
-	 *            path to SDF input file
-	 * @param string
-	 *            path to CSV output file
-	 * @param string
-	 *            comma-seperated list of descriptor names (if empty, all
-	 *            descriptors will be calculated)
-	 */
-	public static ArrayList<Double[]> getAtomicDescriptor(IAtomContainer mole, List<IAtom> atoms,String descNamesStr) throws java.io.IOException {
-		System.out.println("number of atoms => " + atoms.size());
-		List<String> classNames = DescriptorEngine.getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atomic",
-	            null);
-		DescriptorEngine ENGINE = new DescriptorEngine(classNames, null);
-		List<IDescriptor> descriptors = ENGINE.getDescriptorInstances();
-		List<String> descNames = Arrays.asList(descNamesStr.split(","));
-		ArrayList<String> colNames = new ArrayList<String>();
-		ArrayList<Double[]> values = new ArrayList<Double[]>();
-		System.out.println("number of descriptors => " +descriptors.size());
-		System.out.println("List<Double[]> values before => " + values.size());
-		for (IDescriptor desc : descriptors) {
-			System.out.println("inside IDescirptor loop");
-			if (desc instanceof IPAtomicLearningDescriptor)
-				continue;
-			String tname = desc.getClass().getName();
-			String[] tnamebits = tname.split("\\.");
-			tname = tnamebits[tnamebits.length - 1];
-			if ((descNamesStr.length() > 0) && (!descNames.contains(tname)))
-				continue;
-			String[] colNamesArr = desc.getDescriptorNames();
-			for (int idx = 0; idx < colNamesArr.length; idx++) {
-				colNamesArr[idx] = tname + "-" + colNamesArr[idx];
-			}
-
-			colNames.addAll(Arrays.asList(colNamesArr));
-			List<Double[]> descriptor_value = computeDescriptorsAtomic(mole, atoms, (IAtomicDescriptor) desc);
-			System.out.println("List<Double[]> descriptor_value => " + descriptor_value.size());
-			values.addAll(descriptor_value);
-			try {
-				getHoseCodesForMolecule(mole); // return: ArrayList<String>
-			}
-			catch (Exception e){
-				System.out.println(mole.getTitle());
-			}
-//			num_descriptor++;
-				
-		}
-//		System.out.println("Number of Descriptors: " + num_descriptor); // 29
-		System.out.println("value after => " + values.size());
-		return values;
-	}
+//	/**
+//	 * Calculate descriptors. Omits IPMolecularLearningDescriptor
+//	 *
+//	 * @param string
+//	 *            path to SDF input file
+//	 * @param string
+//	 *            path to CSV output file
+//	 * @param string
+//	 *            comma-seperated list of descriptor names (if empty, all
+//	 *            descriptors will be calculated)
+//	 */
+//	public static ArrayList<Double[]> getAtomicDescriptor(IAtomContainer mole, List<IAtom> atoms,String descNamesStr) throws java.io.IOException {
+//		System.out.println("number of atoms => " + atoms.size());
+//		List<String> classNames = DescriptorEngine.getDescriptorClassNameByPackage("org.openscience.cdk.qsar.descriptors.atomic",
+//	            null);
+//		DescriptorEngine ENGINE = new DescriptorEngine(classNames, null);
+//		List<IDescriptor> descriptors = ENGINE.getDescriptorInstances();
+//		List<String> descNames = Arrays.asList(descNamesStr.split(","));
+//		ArrayList<String> colNames = new ArrayList<String>();
+//		ArrayList<Double[]> values = new ArrayList<Double[]>();
+//		System.out.println("number of descriptors => " +descriptors.size());
+//		System.out.println("List<Double[]> values before => " + values.size());
+//		for (IDescriptor desc : descriptors) {
+//			System.out.println("inside IDescirptor loop");
+//			if (desc instanceof IPAtomicLearningDescriptor)
+//				continue;
+//			String tname = desc.getClass().getName();
+//			String[] tnamebits = tname.split("\\.");
+//			tname = tnamebits[tnamebits.length - 1];
+//			if ((descNamesStr.length() > 0) && (!descNames.contains(tname)))
+//				continue;
+//			String[] colNamesArr = desc.getDescriptorNames();
+//			for (int idx = 0; idx < colNamesArr.length; idx++) {
+//				colNamesArr[idx] = tname + "-" + colNamesArr[idx];
+//			}
+//
+//			colNames.addAll(Arrays.asList(colNamesArr));
+//			List<Double[]> descriptor_value = computeDescriptorsAtomic(mole, atoms, (IAtomicDescriptor) desc);
+//			System.out.println("List<Double[]> descriptor_value => " + descriptor_value.size());
+//			values.addAll(descriptor_value);
+//			try {
+//				getHoseCodesForMolecule(mole); // return: ArrayList<String>
+//			}
+//			catch (Exception e){
+//				System.out.println(mole.getTitle());
+//			}
+////			num_descriptor++;
+//				
+//		}
+////		System.out.println("Number of Descriptors: " + num_descriptor); // 29
+//		System.out.println("value after => " + values.size());
+//		return values;
+//	}
 	
 	
 	/**

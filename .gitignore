@@ -48,3 +48,6 @@ Script/
 
 ### target file ###
 target/
+
+### jar file ###
+*.jar

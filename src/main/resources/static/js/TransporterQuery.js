@@ -26,54 +26,218 @@ $("select").change(function() {
  * ajax send post request
  * @returns
  */
-$(document).ready(function() {
-	$("#submit-request").submit(function(event) {
+//$(document).ready(function() {
+//	$("#submit-request").submit(function(event) {
+//		event.preventDefault();
+//		var smiles = $("#smiles-string").val();
+//		var file = $("#fileupload").val();
+//		if (smiles != "") {
+//
+//			console.log("smiles=> " + smiles);
+//			fire_ajax_submit();
+//		} else if (file != "") {
+//
+//			console.log("file =>" + file);
+//			fire_ajax_submit_with_file();
+//		} else {
+//			
+//			exportPromise = marvinSketcherInstance.exportStructure('mol');
+//			exportPromise.then(function(result) {
+//				$('[name="sdf_content"]').val(result);
+//				console.log($('[name="sdf_content"]').val());
+//				if ($('[name="sdf_content"]').val() == "") {
+//					var response = "<h4>No Input!</h4>";
+//					$('.result').html(response);
+//				} else {
+//					console.log("fire_ajax_submit()");
+//					fire_ajax_submit();
+//				}
+//			});
+//
+//		}
+//
+//		/*
+//		 * fire_ajax_submit_with_file(); fire_ajax_submit();
+//		 */
+//
+//	});
+//});
+
+$(document).ready(function(){
+	
+	$("#bth-search-sdf").click(function(event){
+		console.log("file");
+		event.preventDefault();
+		var file = $("#fileupload").val();
+		if (file != "") {
+			fire_ajax_submit_with_file();
+		}
+		else{
+			var json = "<h4>Result: </h4><pre> NO FILE GIVEN !</pre>";
+			$('.result').html(json);
+		}
+	});
+	
+	$("#bth-search-smiles").click(function(event){
+		console.log("smiles");
 		event.preventDefault();
 		var smiles = $("#smiles-string").val();
-		var file = $("#fileupload").val();
-		if (smiles != "") {
-			/*
-			 * var response = "<h4>file here</h4>";
-			 * $('.result').html(response);
-			 */
-			console.log("smiles=> " + smiles);
+		if (smiles != ""){
 			fire_ajax_submit();
-		} else if (file != "") {
-			/*
-			 * var response = "<h4>"+file+"</h4>";
-			 * $('.result').html(response);
-			 */
-			console.log("file =>" + file);
-			fire_ajax_submit_with_file();
-		} else {
-			exportPromise = marvinSketcherInstance.exportStructure('mol');
-
-			exportPromise.then(function(result) {
-				$('[name="sdf_content"]').val(result);
-				console.log($('[name="sdf_content"]').val());
-				if ($('[name="sdf_content"]').val() == "") {
-					var response = "<h4>No Input!</h4>";
-					$('.result').html(response);
-				} else {
-					console.log("fire_ajax_submit()");
-					fire_ajax_submit();
-				}
-			});
-
+		}else{
+			var json = "<h4>Result: </h4><pre> NO SMILES GIVEN !</pre>";
+			$('.result').html(json);
 		}
-
-		/*
-		 * fire_ajax_submit_with_file(); fire_ajax_submit();
-		 */
-
 	});
-});
+	
+	$("#bth-search-draw").click(function(event){
+		console.log("draw");
+		event.preventDefault();
+		exportPromise = marvinSketcherInstance.exportStructure('mol');
+		exportPromise.then(function(result) {
+			$('[name="sdf_content"]').val(result);
+			// console.log($('[name="sdf_content"]').val());
+			if ($('[name="sdf_content"]').val() == "") {
+				var response = "<h4>No Input!</h4>";
+				$('.result').html(response);
+			} else {
+				console.log("fire_ajax_submit()");
+				fire_ajax_submit();
+			}
+		});
+	});
+	
+})
+
+//$(document).ready(function(){
+//var option = null;
+//$("#bth-search-sdf").on("click",function(){
+//	option = "file";
+//});
+//$("#bth-search-smiles").on("click",function(){
+//	option = "smiles";
+//});
+//$("#bth-search-draw").on("click",function(){
+//	option = "draw";
+//});
+//console.log(option);
+//if (option == "file"){
+//	console.log("file");
+//	$("#submit-request").submit(function(event) {
+//		event.preventDefault();
+//		var file = $("#fileupload").val();
+//		if (file != "") {
+//			console.log("no file");
+//		}
+//		else{
+//			console.log("file =>" + file);
+//			fire_ajax_submit_with_file();
+//		}
+//	})
+//}else if(option == "smiles"){
+//	console.log("smiles");
+//	
+//	$("#submit-request").submit(function(event) {
+//		event.preventDefault();
+//		var smiles = $("#smiles-string").val();
+//		if (smiles != ""){
+//			fire_ajax_submit();
+//		}			
+//	})
+//}
+//else{
+//	console.log("draw");
+//	$("#submit-request").submit(function(event) {
+//		event.preventDefault();
+//		exportPromise = marvinSketcherInstance.exportStructure('mol');
+//		exportPromise.then(function(result) {
+//			$('[name="sdf_content"]').val(result);
+//			// console.log($('[name="sdf_content"]').val());
+//			if ($('[name="sdf_content"]').val() == "") {
+//				var response = "<h4>No Input!</h4>";
+//				$('.result').html(response);
+//			} else {
+//				console.log("fire_ajax_submit()");
+//				fire_ajax_submit();
+//			}
+//		});
+//	})
+//}
+//
+//})
+
+//$("#bth-search-sdf").on("click",function(){
+//	option = "file";
+//	console.log("click file");
+//});
+//$("#bth-search-smiles").on("click",function(){
+//	option = "smiles";
+//	console.log("click smiles");
+//});
+//$("#bth-search-draw").on("click",function(){
+//	option = "draw";
+//	console.log("click draw");
+//});
+//
+//$(document).ready(function(){
+//	$("#submit-request").submit(function(event) {
+//		event.preventDefault();
+//		var option = null;
+//		$("#bth-search-sdf").on("click",function(){
+//			option = "file";
+//			console.log("click file");
+//		});
+//		$("#bth-search-smiles").on("click",function(){
+//			option = "smiles";
+//			console.log("click smiles");
+//		});
+//		$("#bth-search-draw").on("click",function(){
+//			option = "draw";
+//			console.log("click draw");
+//		});
+//		console.log(option);
+//		if (option == "file"){
+//			console.log("file");
+//			var file = $("#fileupload").val();
+//			if (file != "") {
+//				console.log("no file");
+//			}
+//			else{
+//				console.log("file =>" + file);
+//				fire_ajax_submit_with_file();
+//			}
+//		}else if(option == "smiles"){
+//			console.log("smiles");
+//			
+//			var smiles = $("#smiles-string").val();
+//			if (smiles != ""){
+//				fire_ajax_submit();
+//			}	
+//		}
+//		else if (option == "draw"){
+//			console.log("draw");
+//
+//			exportPromise = marvinSketcherInstance.exportStructure('mol');
+//			exportPromise.then(function(result) {
+//				$('[name="sdf_content"]').val(result);
+//				// console.log($('[name="sdf_content"]').val());
+//				if ($('[name="sdf_content"]').val() == "") {
+//					var response = "<h4>No Input!</h4>";
+//					$('.result').html(response);
+//				} else {
+//					console.log("fire_ajax_submit()");
+//					fire_ajax_submit();
+//				}
+//			});
+//		}
+//	});
+//});
+
 
 var files = [];
 $(document).on("change", "#fileupload", function(event) {
 	files = event.target.files;
 })
-
 
 /**
  * taking argument from client side and process ajax execution with file 
