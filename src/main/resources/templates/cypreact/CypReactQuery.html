@@ -91,64 +91,68 @@ td, th {
 						</p>
 						<p id="protein-info"></p>
 					</div>
+				</form>
+				<div class="container">
+					<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+						<li class="nav-item"><a class="nav-link active"
+							id="pills-home-tab" data-toggle="pill" href="#pills-chemdraw"
+							role="tab" aria-controls="pills-chemdraw" aria-selected="true">ChemDraw</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="pills-profile-tab" data-toggle="pill" href="#pills-smiles"
+							role="tab" aria-controls="pills-smiles" aria-selected="false">SMILES</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="pills-contact-tab" data-toggle="pill" href="#pills-sdf"
+							role="tab" aria-controls="pills-sdf" aria-selected="false">Upload
+								File</a></li>
+					</ul>
+					<div class="tab-content" id="pills-tabContent">
 
-
-					<div class="container">
-						<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-							<li class="nav-item"><a class="nav-link active"
-								id="pills-home-tab" data-toggle="pill" href="#pills-chemdraw"
-								role="tab" aria-controls="pills-chemdraw" aria-selected="true">ChemDraw</a></li>
-							<li class="nav-item"><a class="nav-link"
-								id="pills-profile-tab" data-toggle="pill" href="#pills-smiles"
-								role="tab" aria-controls="pills-smiles" aria-selected="false">SMILES</a></li>
-							<li class="nav-item"><a class="nav-link"
-								id="pills-contact-tab" data-toggle="pill" href="#pills-sdf"
-								role="tab" aria-controls="pills-sdf" aria-selected="false">Upload
-									File</a></li>
-						</ul>
-						<div class="tab-content" id="pills-tabContent">
-
-							<div class="tab-pane fade show active" id="pills-chemdraw"
-								role="tabpanel" aria-labelledby="pills-home-tab">
-								<p4>Make Sure SMILES Section Is Empty </p4>
-								<div>
-									<iframe src="marvin4js/editor.html" id="sketch" width="450px"
-										height="300px" style="border: 1px solid #b3b3b3;"></iframe>
-
-								</div>
-								<text name="sdf_content" style="display:none;"></text>
-
+						<div class="tab-pane fade show active" id="pills-chemdraw"
+							role="tabpanel" aria-labelledby="pills-home-tab">
+							<p>Please make sure there is no input in SMILES and upload
+								file section.</p>
+							<div>
+								<iframe src="marvin4js/editor.html" id="sketch" width="450px"
+									height="300px" style="border: 1px solid #b3b3b3;"></iframe>
 
 							</div>
+							<text name="sdf_content" style="display:none;"></text>
+							<input class="btn btn-primary btn-sml" type="submit"
+								id="bth-search-draw" form="submit-request" value="Submit">
+							<input class="btn btn-primary btn-sml" type="button"
+								id="draw-load-example" value="Load Example">
 
-							<div class="tab-pane fade" id="pills-smiles" role="tabpanel"
-								aria-labelledby="pills-profile-tab">
+						</div>
 
-								<p>
-									SMILES = <input type="text" id="smiles-string"
-										style="width: 350px;" />
-								</p>
-							</div>
+						<div class="tab-pane fade" id="pills-smiles" role="tabpanel"
+							aria-labelledby="pills-profile-tab">
 
-							<div class="tab-pane fade" id="pills-sdf" role="tabpanel"
-								aria-labelledby="pills-contact-tab">
-								<p4>Make Sure SMILES Section Is Empty </p4>
-								<input id="fileupload" name="file" type="file" />
-								<button class="btn btn-warning btn-sml" id="refresh-file">Remove
-									File</button>
-							</div>
+							<p>
+								SMILES = <input type="text" id="smiles-string"
+									style="width: 350px;" />
+							</p>
+							<br /> <input class="btn btn-primary btn-sml" type="submit"
+								id="bth-search-smiles" form="submit-request"
+								value="Submit SMILES"> <input
+								class="btn btn-primary btn-sml" type="button"
+								id="smiles-load-example" value="Load Example">
+						</div>
+
+						<div class="tab-pane fade" id="pills-sdf" role="tabpanel"
+							aria-labelledby="pills-contact-tab">
+							<p>Please make sure there is no input in SMILES section</p>
+							<input id="fileupload" name="file" type="file" /> <br /> <input
+								class="btn btn-primary btn-sml" type="submit"
+								id="bth-search-sdf" form="submit-request" value="Submit File">
+							<input class="btn btn-primary btn-sml" type="button"
+								id="sdf-remove-example" value="Reset">
 						</div>
 					</div>
+				</div>
 
 
-					<!-- https://medium.com/@grokwich/spring-boot-thymeleaf-html-form-handling-762ef0d51327 -->
+				<!-- https://medium.com/@grokwich/spring-boot-thymeleaf-html-form-handling-762ef0d51327 -->
 
-					<div class="container">
-						<button class="btn btn-primary btn-sml" type="submit"
-							id="bth-search">Submit</button>
-					</div>
-
-				</form>
 			</div>
 
 

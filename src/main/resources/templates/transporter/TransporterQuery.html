@@ -29,7 +29,8 @@
 				python package.
 			</p>
 			<hr class="my-1">
-			<p>More Information about the model please see the publication <a
+			<p>
+				More Information about the model please see the publication <a
 					href="#">[PubMed]</a> <a href="#">[ACS]</a>
 			</p>
 		</div>
@@ -37,111 +38,119 @@
 
 	<!-- Form -->
 	<div class="container">
-		
+
 		<div class="row">
-		<div class="col">
-		
-		<form class="form-horizontal" id="submit-request">
-		<div class="container">
-			<p>
-				Select Transporter 
-				<select id="transporter-select">
-					<option id="check-MDR1" value="MDR1">MDR1</option>
-					<option id="check-BCRP" value="BCRP">BCRP</option>
-					<option id="check-MRP1" value="MRP1">MRP1</option>
-					<option id="check-MRP2" value="MRP2">MRP2</option>
-					<!-- <option value="MRP3">MRP3</option>
+			<div class="col">
+
+				<form class="form-horizontal" id="submit-request">
+					<div class="container">
+						<p>
+							Select Transporter <select id="transporter-select">
+								<option id="check-MDR1" value="MDR1">MDR1</option>
+								<option id="check-BCRP" value="BCRP">BCRP</option>
+								<option id="check-MRP1" value="MRP1">MRP1</option>
+								<option id="check-MRP2" value="MRP2">MRP2</option>
+								<!-- <option value="MRP3">MRP3</option>
 					<option value="MRP4">MRP4</option> -->
-				</select>
-			</p>
-			<p id="protein-info"></p>
-			<!-- insert the protein information here -->
-		</div>
+							</select>
+						</p>
+						<p id="protein-info"></p>
+						<!-- insert the protein information here -->
+					</div>
 
 
-		<!-- Define the role  -->
-		<div class="container">
-			<p>
-				Role 
-				<input type="radio" name="options" id="option-inhibitor" value="inhibitor" checked>
-				inhibition 
-				<input type="radio" name="options" id="option-substrate" value="substrate">
-				substrate 
+					<!-- Define the role  -->
+					<div class="container">
+						<p>
+							Role <input type="radio" name="options" id="option-inhibitor"
+								value="inhibitor" checked> inhibition <input
+								type="radio" name="options" id="option-substrate"
+								value="substrate"> substrate
 
-			</p>
-		</div>
-		</form>
+						</p>
+					</div>
+				</form>
 
 
-		
-		<div class="container">
-		<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-			<li class="nav-item"><a class="nav-link active"
-				id="pills-home-tab" data-toggle="pill" href="#pills-chemdraw" role="tab"
-				aria-controls="pills-chemdraw" aria-selected="true">ChemDraw</a></li>
-			<li class="nav-item"><a class="nav-link" id="pills-profile-tab"
-				data-toggle="pill" href="#pills-smiles" role="tab"
-				aria-controls="pills-smiles" aria-selected="false">SMILES</a></li>
-			<li class="nav-item"><a class="nav-link" id="pills-contact-tab"
-				data-toggle="pill" href="#pills-sdf" role="tab"
-				aria-controls="pills-sdf" aria-selected="false">Upload File</a></li>
-		</ul>
-		<div class="tab-content" id="pills-tabContent">
-			
-			<div class="tab-pane fade show active" id="pills-chemdraw"
-				role="tabpanel" aria-labelledby="pills-home-tab">
-				<p>Please make sure there is no input in SMILES and upload file section.</p>
-				<div>
-					<iframe src="marvin4js/editor.html" id="sketch" width="450px" 
-                    		height="300px" style="border:1px solid #b3b3b3;" ></iframe>
-                    		
-                </div>
-                <text name="sdf_content" style="display:none;"></text>
-				<input class="btn btn-primary btn-sml" type="submit" id="bth-search-draw" form="submit-request" value="Submit">
-				<input class="btn btn-primary btn-sml" type="button" id="draw-load-example" value="Load Example">
-				
+
+				<div class="container">
+					<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+						<li class="nav-item"><a class="nav-link active"
+							id="pills-home-tab" data-toggle="pill" href="#pills-chemdraw"
+							role="tab" aria-controls="pills-chemdraw" aria-selected="true">ChemDraw</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="pills-profile-tab" data-toggle="pill" href="#pills-smiles"
+							role="tab" aria-controls="pills-smiles" aria-selected="false">SMILES</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="pills-contact-tab" data-toggle="pill" href="#pills-sdf"
+							role="tab" aria-controls="pills-sdf" aria-selected="false">Upload
+								File</a></li>
+					</ul>
+					<div class="tab-content" id="pills-tabContent">
+
+						<div class="tab-pane fade show active" id="pills-chemdraw"
+							role="tabpanel" aria-labelledby="pills-home-tab">
+							<p>Please make sure there is no input in SMILES and upload
+								file section.</p>
+							<div>
+								<iframe src="marvin4js/editor.html" id="sketch" width="450px"
+									height="300px" style="border: 1px solid #b3b3b3;"></iframe>
+
+							</div>
+							<text name="sdf_content" style="display:none;"></text>
+							<input class="btn btn-primary btn-sml" type="submit"
+								id="bth-search-draw" form="submit-request" value="Submit">
+							<input class="btn btn-primary btn-sml" type="button"
+								id="draw-load-example" value="Load Example">
+
+						</div>
+
+						<div class="tab-pane fade" id="pills-smiles" role="tabpanel"
+							aria-labelledby="pills-profile-tab">
+
+							<p>
+								SMILES = <input type="text" id="smiles-string"
+									style="width: 350px;" />
+							</p>
+							<br /> <input class="btn btn-primary btn-sml" type="submit"
+								id="bth-search-smiles" form="submit-request"
+								value="Submit SMILES"> <input
+								class="btn btn-primary btn-sml" type="button"
+								id="smiles-load-example" value="Load Example">
+						</div>
+
+						<div class="tab-pane fade" id="pills-sdf" role="tabpanel"
+							aria-labelledby="pills-contact-tab">
+							<p>Please make sure there is no input in SMILES section</p>
+							<input id="fileupload" name="file" type="file" /> <br /> <input
+								class="btn btn-primary btn-sml" type="submit"
+								id="bth-search-sdf" form="submit-request" value="Submit File">
+							<input class="btn btn-primary btn-sml" type="button"
+								id="sdf-remove-example" value="Reset">
+						</div>
+					</div>
+				</div>
+
+
+				<!-- https://medium.com/@grokwich/spring-boot-thymeleaf-html-form-handling-762ef0d51327 -->
+
 			</div>
-			
-			<div class="tab-pane fade" id="pills-smiles" role="tabpanel"
-				aria-labelledby="pills-profile-tab">
-				
-				<p>SMILES = <input type="text" id="smiles-string" style="width: 350px;"/></p>
-				<br/>
-				<input class="btn btn-primary btn-sml" type="submit" id="bth-search-smiles" form="submit-request" value="Submit SMILES">
-				<input class="btn btn-primary btn-sml" type="button" id="smiles-load-example" value="Load Example">
+
+
+
+			<div class="col">
+
+				<div class="result"></div>
+				<div class="debug-info"></div>
+
 			</div>
-			
-			<div class="tab-pane fade" id="pills-sdf" role="tabpanel"
-				aria-labelledby="pills-contact-tab">
-				<p> Please make sure there is no input in SMILES section</p>
-				<input id="fileupload" name="file" type="file" />
-				<br/>
-				<input class="btn btn-primary btn-sml" type="submit" id="bth-search-sdf" form="submit-request" value="Submit File">
-				<input class="btn btn-primary btn-sml" type="button" id="sdf-load-example" value="Load Example">
-			</div>
-		</div>
+
+
 		</div>
 
 
-		<!-- https://medium.com/@grokwich/spring-boot-thymeleaf-html-form-handling-762ef0d51327 -->
-		
-		</div>
-		
-		
-		
-		<div class="col">
-		
-			<div class="result"></div>
-			<div class="debug-info"></div>
-			
-		</div>
-		
-		
-		</div>
-		
-		
 	</div>
-	
+
 </body>
 
 
@@ -193,11 +202,11 @@
 		" 12 14  1  0  0  0  0\n"+
 		"M  END\n";
 	</script>
-	
-	
+
+
 
 	<div th:replace="footer :: footer"></div>
-	
+
 
 </footer>
 </html>
