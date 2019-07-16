@@ -516,10 +516,11 @@ public class FeatureGeneration {
 		MomentOfInertiaDescriptor moD = new MomentOfInertiaDescriptor();
 		String moi = moD.calculate(mol).getValue().toString();
 		
-		NumericalSurface ns = new NumericalSurface(mol);
+		
 		String asa = "NaN";
 		
 		try{
+			NumericalSurface ns = new NumericalSurface(mol);
 			ns.calculateSurface();
 			 asa = String.valueOf(ns.getTotalSurfaceArea());
 		}catch (java.lang.IllegalArgumentException je){

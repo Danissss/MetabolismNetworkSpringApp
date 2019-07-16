@@ -65,18 +65,15 @@ public class RunClassification {
 			
 			while ((s = stdInput.readLine()) != null) {
 				
-				System.out.println(s);
+				
 				String[] descriptorValue = s.split(",");
-//				System.out.println(Arrays.toString(descriptorValue));
-//				System.out.println(Arrays.toString(descriptorValue));
+
 				for(int i = 0; i < descriptorValue.length; i++) {
-					//TODO: use try catch to temporary fix
 					try {
 						if(descriptorValue[i].equals("inf") || descriptorValue[i].equals("nan")) {
 							Double val = new Double(0.0);
 							output.add(val);
 						}else {
-							// System.out.println(descriptorValue[i]);
 							Double val = Double.valueOf(descriptorValue[i].replace("[", "").replace("]", ""));
 							output.add(val);
 						}
@@ -106,13 +103,9 @@ public class RunClassification {
 	 */
 	@SuppressWarnings("deprecation")
 	public Instances CreateTestingInstance(String option, String input, String model_type) {
-		System.out.println("Enter CreateTestingInstance Function");
+		// System.out.println("Enter CreateTestingInstance Function");
 		
 		ArrayList<Double> descriptorValue = GetRawInput(option,input);
-		System.out.println(descriptorValue.size());
-//		for (int i = 0; i < descriptorValue.size(); i++) {
-//			System.out.println(i);
-//		}
 		int descriptorValueLength = descriptorValue.size();
 		ArrayList<Attribute> attribute_al = GenerateAttributeName(descriptorValueLength);
 		
@@ -221,44 +214,12 @@ public class RunClassification {
 		if (modelPath == null) {
 			return null;
 		}else {
-			Classifier cls = (Classifier) weka.core.SerializationHelper.read(modelPath);
-//			double result = cls.classifyInstance(testInstance.firstInstance());
-			String output_instring = testInstance.classAttribute().value((int) cls.classifyInstance(testInstance.instance(0)));
 			
-
+			Classifier cls = (Classifier) weka.core.SerializationHelper.read(modelPath);
+			String output_instring = testInstance.classAttribute().value((int) cls.classifyInstance(testInstance.instance(0)));
 			return output_instring;
 			
 		}
 	}
 		
-		
-		
-
-	
-	/**
-	 * args[0] = model_type
-	 * args[1] = ProteinName
-	 * args[2] = smiles
-	 * @param args
-	 */
-//	public static void main(String[] args) {
-//		String input = "[H]OC(=O)[C@@]([H])(N([H])[H])C([H])([H])C1=C([H])N(C([H])=N1)C([H])([H])[H]";
-//		// System.out.println(String.format("%s;%s;%s", args[0],args[1],args[2]));
-//		RunClassification testset = new RunClassification();
-////		Instances testInstance = testset.CreateTestingInstance("-s",args[2], args[0]);
-//		Instances testInstance = testset.CreateTestingInstance("-s", input, "substrate");
-////		System.out.println(testInstance.instance(0).numValues());
-//		
-//		try {
-//			// String model_type, String ProteinName, Instances testInstance
-////			String classified_output = testset.ClassifyInstance(args[0], args[1], testInstance);
-//			String classified_output = testset.ClassifyInstance("substrate", "MDR1", testInstance);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			System.out.println(e);
-//		}
-//		
-//		
-//	}
 }

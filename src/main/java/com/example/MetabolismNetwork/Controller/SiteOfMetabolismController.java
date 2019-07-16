@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.MetabolismNetwork.AjaxBody.SiteOfMetabolismAjaxResponseBody;
+import com.example.MetabolismNetwork.Helper.PrintStatus;
 import com.example.MetabolismNetwork.Helper.SiteOfMetabolismHelper;
 import com.example.MetabolismNetwork.SubmitCriteria.SoMSubmitCriteria;
 
@@ -73,7 +74,7 @@ public class SiteOfMetabolismController {
 		
 		if(errors.hasErrors()) {
 			
-			
+			PrintStatus.PrintStatusMessage("SOMPredictor", "ERROR");
 			result.setErrorMsg(errors.getAllErrors()
 					.stream().map(x -> x.getDefaultMessage())
 					.collect(Collectors.joining(",")));
@@ -86,7 +87,7 @@ public class SiteOfMetabolismController {
 			
 			// get smiles directly
 			if(!submit.smiles.isEmpty()) {
-				// System.out.println(submit.smiles);
+				PrintStatus.PrintStatusMessage("SOMPredictor", submit.smiles);
 				IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
 				SmilesParser smipar = new SmilesParser(bldr);
 				
@@ -166,12 +167,13 @@ public class SiteOfMetabolismController {
 			
 			// check if chemdraw exist
 			else if(!submit.chemdraw.isEmpty()) {
+				PrintStatus.PrintStatusMessage("SOMPredictor", "ChemDraw");
 				try {
 					IAtomContainer mol = ReadMolecule.GetMoleculeFromMolBlock(submit.chemdraw);
 					if(mol != null) {
 						String smiles = ReadMolecule.ConvertIAtomContainerToSmiles(mol);
 						// TODO: need to run confirmation creation from rdkit 
-						System.out.println(smiles);
+//						System.out.println(smiles);
 						if(smiles.contains(".")) {
 							result.setErrorMsg("The compound is not connected!");
 							
@@ -265,9 +267,7 @@ public class SiteOfMetabolismController {
 		SiteOfMetabolismAjaxResponseBody result = new SiteOfMetabolismAjaxResponseBody();
 		
 		if(multipartFile!=null) {
-			// System.out.println("get file step");
-			// System.out.println(protein);
-			
+			PrintStatus.PrintStatusMessage("SOMPredictor", multipartFile.getOriginalFilename());			
 			if(!multipartFile.getOriginalFilename().isEmpty()) {
 				try {
 					BufferedOutputStream outputStream = new BufferedOutputStream(
@@ -370,6 +370,7 @@ public class SiteOfMetabolismController {
 			}
 		}
 		else {
+			
 			result.setErrorMsg("Empty File.");
 			result.setFail(true);
 		}

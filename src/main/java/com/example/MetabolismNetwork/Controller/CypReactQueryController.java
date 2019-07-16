@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.MetabolismNetwork.AjaxBody.CypReactAjaxResponseBody;
+import com.example.MetabolismNetwork.Helper.PrintStatus;
 import com.example.MetabolismNetwork.Model.TransporterModel;
 import com.example.MetabolismNetwork.SubmitCriteria.CypReactSubmitCriteria;
 
@@ -55,12 +56,12 @@ public class CypReactQueryController {
 	@PostMapping("/cypreact")
 	public ResponseEntity<?> getSearchResultViaAjax(
             @Valid @RequestBody CypReactSubmitCriteria submit, Errors errors) throws Exception {
-
+		
 		CypReactAjaxResponseBody result = new CypReactAjaxResponseBody();
 		
 		if(errors.hasErrors()) {
 			
-			
+			PrintStatus.PrintStatusMessage("CypReact", "ERROR");
 			result.setErrorMsg(errors.getAllErrors()
 					.stream().map(x -> x.getDefaultMessage())
 					.collect(Collectors.joining(",")));
@@ -70,7 +71,7 @@ public class CypReactQueryController {
 		}
 		else {
 			
-			// System.out.println("here=============================");
+			PrintStatus.PrintStatusMessage("CypReact", submit.SMILES);
 			ReactantPred CypReact = new ReactantPred();
 			String supportFoldPath = String.format("%s/", System.getProperty("user.dir"));
 			
@@ -86,7 +87,7 @@ public class CypReactQueryController {
 				
 				
 			}else if(!submit.chemdraw.isEmpty()){
-				
+				PrintStatus.PrintStatusMessage("CypReact", "ChemDraw");
 				try {
 					IAtomContainer mol = ReadMolecule.GetMoleculeFromMolBlock(submit.chemdraw);
 					if(mol != null) {
@@ -220,7 +221,7 @@ public class CypReactQueryController {
 			@RequestParam("CYP2D6") String CYP2D6,
 			@RequestParam("CYP2E1") String CYP2E1,
 			@RequestParam("CYP3A4") String CYP3A4){
-		
+		PrintStatus.PrintStatusMessage("CypReact", multipartFile.getOriginalFilename());
 		CypReactAjaxResponseBody result = new CypReactAjaxResponseBody();
 		ReactantPred CypReact = new ReactantPred();
 		String supportFoldPath = String.format("%s/", System.getProperty("user.dir"));

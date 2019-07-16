@@ -30,6 +30,8 @@ import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
 import org.openscience.cdk.renderer.AtomContainerRenderer;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.font.AWTFontManager;
+import org.openscience.cdk.renderer.generators.AtomContainerBoundsGenerator;
+import org.openscience.cdk.renderer.generators.AtomNumberGenerator;
 import org.openscience.cdk.renderer.generators.BasicAtomGenerator;
 import org.openscience.cdk.renderer.generators.BasicBondGenerator;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
@@ -133,6 +135,8 @@ public class SiteOfMetabolismHelper {
         generators.add(new BasicBondGenerator());
         generators.add(new HighlightGenerator());
         generators.add(new BasicAtomGenerator());
+//        generators.add(new AtomContainerBoundsGenerator());
+//        generators.add(new AtomNumberGenerator());
         
         
         Map<IChemObject, Integer> ids = new HashMap<>();

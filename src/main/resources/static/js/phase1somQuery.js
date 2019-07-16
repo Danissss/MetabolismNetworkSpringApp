@@ -16,6 +16,7 @@ $(document).ready(function(){
 	$("#bth-search-sdf").click(function(event){
 		console.log("file");
 		event.preventDefault();
+		$('#generated-image').remove();
 		var file = $("#fileupload").val();
 		if (file != "") {
 			fire_ajax_submit_with_file();
@@ -29,6 +30,7 @@ $(document).ready(function(){
 	$("#bth-search-smiles").click(function(event){
 		console.log("smiles");
 		event.preventDefault();
+		$('#generated-image').remove();
 		var smiles = $("#smiles-string").val();
 		if (smiles != ""){
 			fire_ajax_submit();
@@ -41,6 +43,7 @@ $(document).ready(function(){
 	$("#bth-search-draw").click(function(event){
 		console.log("draw");
 		event.preventDefault();
+		$('#generated-image').remove();
 		exportPromise = marvinSketcherInstance.exportStructure('mol');
 		exportPromise.then(function(result) {
 			$('[name="sdf_content"]').val(result);
@@ -185,7 +188,6 @@ function fire_ajax_submit_with_file() {
 
 				/* this e will be standard error prepared from spring framework */
 				error : function(e) {
-
 					var json = "<h4>Ajax Response</h4><pre>" + e.responseText
 							+ "</pre>";
 					$('#feedback').html(json);
@@ -247,6 +249,7 @@ function fire_ajax_submit() {
 						$('.result').html(json);
 						$('#bth-search').prop("disabled", false);
 					} else if (data.success === true) {
+						
 						var json = "<pre>Success: Atom(s) with red color is the predicted site of metabolism </pre>";
 						var images_div = "<img id=\"generated-image\" src=\"" + data.image_path
 								+ "\" height=\"360px\" width=\"360px\">";
@@ -261,7 +264,6 @@ function fire_ajax_submit() {
 
 				/* this e will be standard error prepared from spring framework */
 				error : function(e) {
-
 					var json = "<h4>Ajax Response</h4><pre>" + e.responseText
 							+ "</pre>";
 					$('#feedback').html(json);

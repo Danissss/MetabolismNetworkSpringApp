@@ -38,68 +38,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 //import ambit2.smarts.SmartsHelper;
 
 public class ChemSearcher {
-	/*
-	public static void main(String args[]) throws Exception {
-
-		IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-		SmilesGenerator sg = new SmilesGenerator();
-		SmilesParser sp = new SmilesParser(builder);
-		IAtomContainer molecule = sp
-				.parseSmiles("CSC1=NC(NCC(O)=O)=C2N=C(N=C2N1C(OS(O)(=O)=O)c1ccc(OCC=O)c(OC2CC(S)C(=O)O2)c1)C#N");
-
-		ChemSearcher csearcher = new ChemSearcher();
-
-		
-		System.out.println("SIZE: " + String.valueOf(csearcher.getRINFingerprintPatterns().size()));
-		LinkedHashMap<String, String> queries = csearcher.getRINFingerprintPatterns();
-
-		System.out.println("SIZE: " + String.valueOf(csearcher.getRINAtomFingerprintPatterns().size()));
-		LinkedHashMap<String, String> queries_2 = csearcher.getRINAtomFingerprintPatterns();	
-		
-//		System.out.println("TEST 1");
-//		ArrayList<ArrayList<Integer>> machtingAt = csearcher
-//				.generateClassyfireAtomFingeprint(molecule, queries);
-
-		System.out.println("TEST 1_1");
-		ArrayList<ArrayList<Integer>> machtingAt2 = csearcher
-				.generateClassyfireAtomFingeprint(molecule, queries_2);		
-		
-		
-		
-		
-		
-		File sdfFileTest = new File("data/test_2C8.sdf");
-		System.out.println(sdfFileTest.getName());
-//		csearcher.serialAtomfingerprinterToSdf(sdfFileTest, queries);
-		ArrayList<ArrayList<ArrayList<Integer>>> q = csearcher.geterateSerialAtomfingerprintToArraylist(sdfFileTest, queries_2);
-
-
-//		IAtomContainer molecule2 = SmartsHelper
-//				.getMoleculeFromSmiles("CC(O)=O.OS(=O)(=O)OC(C#N)c1c(N(C=O)N=O)c(c(OC(C=O)C2CN2)c(OC2CC(C(=N)C3=CC=CS3)C(=O)O2)c1[N+]([O-])=O)[N+]([O-])=O");
-//		SMARTSQueryTool querytool = new SMARTSQueryTool("[#6;r3]-1[#6;r3]-[#7;H1X3r3]-1",
-//				builder);
-//		boolean status = querytool.matches(molecule2);
-//		System.out.println("Status: " + status);
-//		if (status) {
-//			int nmatch = querytool.countMatches();
-//			System.out.println("Nr of metabolites: " + nmatch);
-//			List mappings = querytool.getMatchingAtoms(); // NEED TO REMOVE
-//															// DUPLICATES
-//															// [25,26, 27], [26,
-//															// 25, 27], etc.
-//			for (int i = 0; i < nmatch; i++) {
-//				List atomIndices = (List) mappings.get(i);
-//				Collections.sort(atomIndices); // NEED TO REMOVE DUPLICATES
-//				System.out.println("Hit nr " + (i + 1) + ": " + atomIndices.toString());
-//				for (int j = 0; j < atomIndices.size(); j++) {
-//					System.out.println("Atom nr " + (j + 1) + ": "
-//							+ molecule2.getAtom((Integer) atomIndices.get(j)));
-//				}
-//			}
-//		}
-
-	}
-	*/
 	/**
 	 * 
 	 * @param molecule

@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.MetabolismNetwork.AjaxBody.TransporterAjaxResponseBody;
+import com.example.MetabolismNetwork.Helper.PrintStatus;
 import com.example.MetabolismNetwork.Model.TransporterModel;
 import com.example.MetabolismNetwork.SubmitCriteria.TransporterSubmitCriteria;
 
@@ -48,14 +49,15 @@ public class TransporterQueryController {
 	@GetMapping("/transporter")
 	public String transporterQuery(Model model) {
 		model.addAttribute("TransporterModel", new TransporterModel());
-//		System.out.println("Message");
 		return "transporter/TransporterQuery";
 	}
 	
 	@PostMapping("/transporter")
 	public ResponseEntity<?> getSearchResultViaAjax(
             @Valid @RequestBody TransporterSubmitCriteria submit, Errors errors) {
-//		System.out.println(submit.protein);
+
+		
+		
 		TransporterAjaxResponseBody result = new TransporterAjaxResponseBody();
 		
 		if(errors.hasErrors()) {
@@ -65,7 +67,7 @@ public class TransporterQueryController {
 					.stream().map(x -> x.getDefaultMessage())
 					.collect(Collectors.joining(",")));
 			
-			
+			PrintStatus.PrintStatusMessage("DrugPorter", "ERROR");
 			return ResponseEntity.badRequest().body(result);
 		}
 		else {
@@ -73,7 +75,7 @@ public class TransporterQueryController {
 			
 			// get smiles directly
 			if(!submit.smiles.isEmpty()) {
-				// System.out.println(submit.smiles);
+				PrintStatus.PrintStatusMessage("DrugPorter", submit.smiles);
 				Instances testinstance = newclassifier.CreateTestingInstance("-s", submit.smiles, submit.role);
 				
 				try {
@@ -87,6 +89,7 @@ public class TransporterQueryController {
 				
 			}
 			else if(!submit.chemdraw.isEmpty()) {
+				PrintStatus.PrintStatusMessage("DrugPorter", "ChemDraw");
 				try {
 					IAtomContainer mol = ReadMolecule.GetMoleculeFromMolBlock(submit.chemdraw);
 					
@@ -120,11 +123,6 @@ public class TransporterQueryController {
 				
 			}
 			
-			// get submit.smiles; process the prediction, get the predicted result
-			// store the info into result object, send to web
-//			result.setRole(submit.role);
-//			result.setPredictedRole(submit.smiles);
-			
 			
 			return ResponseEntity.ok(result);
 			
@@ -150,13 +148,10 @@ public class TransporterQueryController {
 	@ResponseBody
 	public ResponseEntity<?> getSearchResultViaAjaxFile(@RequestParam("file") MultipartFile multipartFile, @RequestParam("role") String role,
 			@RequestParam("protein") String protein){
-		
+		PrintStatus.PrintStatusMessage("DrugPorter", multipartFile.getOriginalFilename());
 		TransporterAjaxResponseBody result = new TransporterAjaxResponseBody();
 		RunClassification newclassifier = new RunClassification();
-		System.out.println(role);
-		System.out.println(protein);
 		if(multipartFile!=null) {
-			System.out.println("get file step");
 			if(!multipartFile.getOriginalFilename().isEmpty()) {
 						
 				String smiles = null;
@@ -222,25 +217,11 @@ public class TransporterQueryController {
 				
 				
 			}
-		}
-		else {
+		}else {
 			result.setPredictedRole("Empty File.");
 		}
 		
 		return ResponseEntity.ok(result);
 	}
-	
-	
-	
-	
-
-
-	
-	
-//	// not the best way to render static page by redirect it 
-//	@RequestMapping("/one")
-//    public String one() {
-//        return "redirect:/samplestatic.html";
-//    }
 	
 }
