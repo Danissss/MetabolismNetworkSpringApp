@@ -14,11 +14,6 @@ public class StaticPageController {
 		return "redirect:/transporter"; 
 	}
 	
-//	@RequestMapping("/index")
-//	public String index() {
-//		return "/index";		
-//	}
-	
 	
 	@RequestMapping("/about")
 	public String AboutUs() {
@@ -30,13 +25,5 @@ public class StaticPageController {
 		return "staticpage/contactus";
 	}
 	
-	
-	
-	
-//	// not the best way to render static page by redirect it 
-//	@RequestMapping("/one")
-//    public String one() {
-//        return "redirect:/samplestatic.html";
-//    }
 	
 }

@@ -1,0 +1,187 @@
+<html>
+<head>
+<title>CypReact</title>
+<link href="webjars/bootstrap/4.1.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="marvin4js/gui/lib/promise-1.0.0.min.js"></script>
+<script src="marvin4js/js/marvinjslauncher.js"></script>
+<script src="js/CypReactQuery.js"></script>
+
+<style>
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+</style>
+
+</head>
+
+<header>
+	<div th:replace="header :: header"></div>
+</header>
+
+<body>
+	<!-- Introduction -->
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-5">Chemical Properties Prediction</h1>
+			<p class="lead">
+				LogS, LogP prediction based on machine learning method.
+			</p>
+			<hr class="my-1">
+		</div>
+	</div>
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col">
+				<div class="container">
+					<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+						<li class="nav-item"><a class="nav-link active"
+							id="pills-home-tab" data-toggle="pill" href="#pills-chemdraw"
+							role="tab" aria-controls="pills-chemdraw" aria-selected="true">ChemDraw</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="pills-profile-tab" data-toggle="pill" href="#pills-smiles"
+							role="tab" aria-controls="pills-smiles" aria-selected="false">SMILES</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="pills-contact-tab" data-toggle="pill" href="#pills-sdf"
+							role="tab" aria-controls="pills-sdf" aria-selected="false">Upload
+								File</a></li>
+					</ul>
+					<div class="tab-content" id="pills-tabContent">
+
+						<div class="tab-pane fade show active" id="pills-chemdraw"
+							role="tabpanel" aria-labelledby="pills-home-tab">
+							<p>Please make sure there is no input in SMILES and upload
+								file section.</p>
+							<div>
+								<iframe src="marvin4js/editor.html" id="sketch" width="450px"
+									height="300px" style="border: 1px solid #b3b3b3;"></iframe>
+
+							</div>
+							<text name="sdf_content" style="display:none;"></text>
+							<input class="btn btn-primary btn-sml" type="submit"
+								id="bth-search-draw" form="submit-request" value="Submit">
+							<input class="btn btn-primary btn-sml" type="button"
+								id="draw-load-example" value="Load Example">
+
+						</div>
+
+						<div class="tab-pane fade" id="pills-smiles" role="tabpanel"
+							aria-labelledby="pills-profile-tab">
+
+							<p>
+								SMILES = <input type="text" id="smiles-string"
+									style="width: 350px;" />
+							</p>
+							<br /> <input class="btn btn-primary btn-sml" type="submit"
+								id="bth-search-smiles" form="submit-request"
+								value="Submit SMILES"> <input
+								class="btn btn-primary btn-sml" type="button"
+								id="smiles-load-example" value="Load Example">
+						</div>
+
+						<div class="tab-pane fade" id="pills-sdf" role="tabpanel"
+							aria-labelledby="pills-contact-tab">
+							<p>Please make sure there is no input in SMILES section</p>
+							<input id="fileupload" name="file" type="file" /> <br /> <input
+								class="btn btn-primary btn-sml" type="submit"
+								id="bth-search-sdf" form="submit-request" value="Submit File">
+							<input class="btn btn-primary btn-sml" type="button"
+								id="sdf-remove-example" value="Reset">
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="col">
+
+				<div class="result"></div>
+				<div class="debug-info"></div>
+
+			</div>
+
+
+		</div>
+
+
+	</div>
+
+
+
+
+
+
+
+</body>
+
+
+
+
+<footer>
+
+	<script type="text/javascript">
+		var marvinSketcherInstance;
+		MarvinJSUtil.getEditor("#sketch").then(function(sketcherInstance) {
+			marvinSketcherInstance = sketcherInstance;
+			marvinSketcherInstance.importStructure("mol", s).catch(function(error) {
+				alert(error);
+			});
+			}, function(error) {
+				alert("Loading of the sketcher failed"+error);
+	    }); 
+		var s = "\n\n\n"+
+		" 17 16  0     1  0  0  0  0  0999 V2000\n"+
+		"    1.5719   -0.5512    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -1.5811    1.4029    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -1.6164   -0.3372    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -0.2020   -1.8251    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    1.3723   -0.0127    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0\n"+
+		"   -0.0250   -0.3698    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0\n"+
+		"    1.6198    1.4889    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -1.1395    0.2043    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -0.1469   -0.0043    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    2.1279   -0.4625    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    2.6574    1.6877    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    1.4366    1.9697    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    0.9929    1.9647    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -1.0877   -2.0590    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    0.5254   -2.2541    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"    2.4815   -0.3389    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"   -2.3052    1.7645    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0\n"+
+		"  1  5  1  0  0  0  0\n"+
+		"  1 16  1  0  0  0  0\n"+
+		"  2  8  1  0  0  0  0\n"+
+		"  2 17  1  0  0  0  0\n"+
+		"  3  8  2  0  0  0  0\n"+
+		"  4  6  1  0  0  0  0\n"+
+		"  4 14  1  0  0  0  0\n"+
+		"  4 15  1  0  0  0  0\n"+
+		"  5  6  1  0  0  0  0\n"+
+		"  5  7  1  0  0  0  0\n"+
+		"  5 10  1  0  0  0  0\n"+
+		"  6  8  1  0  0  0  0\n"+
+		"  6  9  1  0  0  0  0\n"+
+		"  7 11  1  0  0  0  0\n"+
+		"  7 12  1  0  0  0  0\n"+
+		"  7 13  1  0  0  0  0\n"+
+		"M  END\n";
+	</script>
+	
+	<div th:replace="footer :: footer"></div>
+
+
+</footer>
+</html>
