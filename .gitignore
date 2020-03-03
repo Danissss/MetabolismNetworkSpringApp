@@ -31,20 +31,20 @@ build/
 .vscode/
 
 ### Model File ###
-/Model/
+Model/*.model
 
 ### image file ###
 CompoundImages/
 uploadedFile/
 
 ### db file ###
-HoseDB/
+HoseDB/*.db
 
 ### download file ###
-Downloads/
+Downloads/*.zip
 
 ### script file ###
-Script/
+Script/*
 
 ### target file ###
 target/
