@@ -27,15 +27,25 @@ target/
 /.nb-gradle/
 build/
 
+### ignore everything except subfolders ###
+#!*/
+
 ### VS Code ###
 .vscode/
 
 ### Model File ###
 Model/*.model
+Model/NMRPredModel/*
+Model/PhaseIinhibitorModel/*
+Model/PhaseIIReactModel/*
+Model/PhaseISOMModel/*
+Model/TransporterModel/*
 
 ### image file ###
-CompoundImages/
-uploadedFile/
+CompoundImages/*.png
+CompoundImages/*.jpeg
+uploadedFile/*.sdf
+uploadedFile/*.mol
 
 ### db file ###
 HoseDB/*.db
@@ -45,6 +55,7 @@ Downloads/*.zip
 
 ### script file ###
 Script/*
+!Script/.gitkeep
 
 ### target file ###
 target/

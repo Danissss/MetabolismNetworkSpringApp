@@ -42,6 +42,53 @@ public class DownloadPageController {
 	
 	
 	/**
+	 * Download DrugExporter windows jar desktop program
+	 * TODO: Set the rate limiter that prevent massive scripting download
+	 * @param param
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(path = "/downloads/DrugPorter_Windows", method = RequestMethod.GET)
+	public ResponseEntity<Resource> drugPorterWindowsDownload(String param) throws IOException {
+	    
+		File file = new File(String.format("%s/Downloads/DrugPorter_Windows.zip", current_dir));
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+		HttpHeaders headers = new HttpHeaders(); 
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=DrugPorter_Windows.zip");
+	    return ResponseEntity.ok()
+	            .headers(headers)
+	            .contentLength(file.length())
+	            .contentType(MediaType.parseMediaType("application/octet-stream"))
+	            .body(resource);
+	}
+	
+	
+	
+	/**
+	 * Download DrugExporter macos jar desktop program
+	 * TODO: Set the rate limiter that prevent massive scripting download
+	 * @param param
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(path = "/downloads/DrugPorter_macOS", method = RequestMethod.GET)
+	public ResponseEntity<Resource> drugPorterMacOSDownload(String param) throws IOException {
+	    
+		File file = new File(String.format("%s/Downloads/DrugPorter_macOS.zip", current_dir));
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+		HttpHeaders headers = new HttpHeaders(); 
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=DrugPorter_macOS.zip");
+	    return ResponseEntity.ok()
+	            .headers(headers)
+	            .contentLength(file.length())
+	            .contentType(MediaType.parseMediaType("application/octet-stream"))
+	            .body(resource);
+	    
+	}
+	
+	
+	
+	/**
 	 * Download CypReact Dataset (SDF)
 	 * @param param
 	 * @return
