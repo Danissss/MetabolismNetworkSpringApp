@@ -607,14 +607,10 @@ public class Biotransformer {
 					j++;
 
 					products.addAtomContainer(ac);
-//					System.err.println("\n=======>  Getting metabolites for compound " + ac.getProperty(CDKConstants.TITLE));
-//					IAtomContainer stmol = standardizeMoleculeWithCopy(ac);
-//					AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(stmol);
-//					AtomContainerManipulator.convertImplicitToExplicitHydrogens(stmol);	
+
 					IAtomContainerSet t = applyReactionChain(ac, this.smrkMan, reactions, false, filter, nr_of_steps, scoreThreshold);
 					
 					if(t.getAtomContainerCount() > 0){
-//						System.out.println("Adding: " + this.smiGen.isomeric().create(t.getAtomContainer(0)));
 						products.add( t );
 					}				
 				}
@@ -631,15 +627,6 @@ public class Biotransformer {
 
 	public ArrayList<Biotransformation> metabolizeWithEnzyme(IAtomContainer substrate, EnzymeName enz, boolean preprocess, boolean filter, double threshold) throws Exception {
 		IAtomContainer clonedSubs = substrate.clone();
-		
-//		if(preprocess){
-//			clonedSubs = ChemStructureManipulator.preprocessContainer(clonedSubs);
-//			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clonedSubs);
-//			AtomContainerManipulator.convertImplicitToExplicitHydrogens(clonedSubs);	
-//		} else{
-//			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(clonedSubs);
-//			AtomContainerManipulator.convertImplicitToExplicitHydrogens(clonedSubs);
-//		}
 		
 		try{
 			if(this.bSystem.getEnzymeHash().containsKey(enz)){
@@ -938,15 +925,7 @@ public class Biotransformer {
 		}
 		return biotransformations;
 	}
-	
-//	public ArrayList<Biotransformation> metabolizeWithEnzymes(IAtomContainer target,
-//		ArrayList<EnzymeName> enzymeNames, boolean preprocess, boolean filter, Double scoreThreshold) throws Exception{
-//		ArrayList<Biotransformation> results = new ArrayList<Biotransformation>();
-//		for(EnzymeName enz : enzymeNames){
-//			results.addAll(metabolizeWithEnzyme(target, enz, preprocess, filter, scoreThreshold) );		
-//		}
-//		return results;
-//	}
+
 	
 
 	
@@ -975,9 +954,6 @@ public class Biotransformer {
 			
 			while(nrOfSteps>0){
 				counter++;
-//				System.out.println(counter);
-//				System.out.println(containers.getAtomContainerCount());
-//				System.out.println("Results: " + containers.getAtomContainerCount());
 				ArrayList<Biotransformation> currentProducts = metabolizeWithEnzymes(containers, enzymes, preprocess, filter, scoreThreshold);
 				nrOfSteps--;
 				
@@ -1021,32 +997,15 @@ public class Biotransformer {
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(starget);
 			AtomContainerManipulator.convertImplicitToExplicitHydrogens(starget);
 		}
-//		ArrayList<MetabolicReaction> matchedReactions = new ArrayList<MetabolicReaction>();
-//		ArrayList<MetabolicReaction> filteredReactions = new ArrayList<MetabolicReaction>();		
 
 		InChIGenerator gen0 = this.inchiGenFactory.getInChIGenerator(target);
 		target.setProperty("InChI", gen0.getInchi());
 		target.setProperty("InChIKey", gen0.getInchiKey());
 		target.setProperty("SMILES", this.smiGen.create(target));
 		target.setProperty("Molecular formula", ChemStructureExplorer.getMolecularFormula(target));
-		//			System.out.println(i.name);
-//		boolean match_constraints = ChemStructureExplorer.compoundMatchesReactionConstraints(reaction, starget);
-//		//			System.out.println(i.name);
-//		if (match_constraints) {
-//			//				System.out.println("Compound matches " + i.name + ": " + match_constraints);
-//			matchedReactions.add(reaction);
-//		}
-//
-//		this.smrkMan.applyTransformation(
-//				starget, null , reaction.getSmirksReaction());
-				
+
 		IAtomContainerSet partialSet = generateAllMetabolitesFromAtomContainerViaTransformationAtAllLocations(
 				starget, reaction.getSmirksReaction(), false);
-		
-//		System.out.println("PartialSet after applying reaction " + reaction.name + " at all locations simultaneously: " + partialSet.getAtomContainerCount());
-//		for(IAtomContainer a : partialSet.atomContainers()){
-//			System.out.println(this.smiGen.isomeric().create(a));
-//		}
 		
 		Double score=0.0;
 		IAtomContainerSet subs = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
@@ -1192,8 +1151,6 @@ public class Biotransformer {
 				startingSet = this.extractProductsFromBiotransformations(partialBiotransf);
 				
 				for(IAtomContainer a : startingSet.atomContainers()){
-//					biotransformations.addAll(applyReactionAtOnceAndReturnBiotransformations(standardizeMoleculeWithCopy(a),
-//							reactions, false, filter, nrOfSteps, scoreThreshold));
 					biotransformations.addAll(applyReactionAtOnceAndReturnBiotransformations(a,
 							reactions, false, filter, nrOfSteps, scoreThreshold));
 				}
@@ -1254,20 +1211,11 @@ public class Biotransformer {
 					
 					if(hMap.containsKey(ikey)) {
 						hash_ac = hMap.get(ikey).clone();
-//						for(Map.Entry<Object, Object> o : hash_ac.getProperties().entrySet()){
-//							properties.put();
-//						}
+
 						properties.put("InChI", hash_ac.getProperty("InChI"));
 						properties.put("InChIKey", hash_ac.getProperty("InChIKey"));
-						
-//						if(hash_ac.getProperty("SMILES") != null) {
-//							System.out.println( "hMap.containsKey(" + ikey +"): " + hMap.containsKey(ikey));
-//							System.out.println( "SMILES: " + hash_ac.getProperty("SMILES"));
-							properties.put("SMILES", hash_ac.getProperty("SMILES"));
-//						}else {
-//							
-//							properties.put("SMILES", this.smiGen.create(hash_ac));
-//						}
+
+						properties.put("SMILES", hash_ac.getProperty("SMILES"));
 							
 						properties.put("Synonyms", hash_ac.getProperty("Synonyms"));
 						properties.put("PUBCHEM_CID", hash_ac.getProperty("PUBCHEM_CID"));

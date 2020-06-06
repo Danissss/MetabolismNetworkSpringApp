@@ -33,11 +33,6 @@ import weka.core.Instances;
 
 public class NMRPred {
 	
-//	private static String currend_dir = System.getProperty("user.dir");
-
-	
-	
-	
 	/**
 	 * 
 	 * @param num_of_attribute
@@ -246,9 +241,7 @@ public class NMRPred {
 	 */
 	public HashMap<Integer, Double> GetPredictedShift(IAtomContainer mole, String solvent, String atom_type){
 		
-		NMRPred new_pred = new NMRPred();
 		
-		// <Integer, Double> = atom.getIndex(), shift
 		HashMap<Integer, Double> HoseResult = new HashMap<Integer, Double>();
 		ArrayList<Attribute> attribute = GenerateAttributeName(116);
 		ArrayList<ArrayList<String>> nearestAtomList = BuildDataSet.getNearestAtoms(mole,3);
@@ -258,7 +251,7 @@ public class NMRPred {
 			if(atom_type == "C") {
 				
 				String pure_solvent = FormatSolventName(solvent);
-				HoseResult = new_pred.Retrive13CHoseCode(mole, pure_solvent);
+				HoseResult = Retrive13CHoseCode(mole, pure_solvent);
 			
 
 				for(Integer key: HoseResult.keySet()) {
@@ -276,14 +269,14 @@ public class NMRPred {
 			else if(atom_type == "H") {
 				
 				String pure_solvent = FormatSolventName(solvent);
-				HoseResult = new_pred.Retrive1HHoseCode(mole, pure_solvent);
+				HoseResult = Retrive1HHoseCode(mole, pure_solvent);
 
 				for(Integer key: HoseResult.keySet()) {
 					if(HoseResult.get(key) == 0.0) {
 						// if HoseResult.get(key) == 0.0 means can't find the particular Hose Code 
 						// try to predict
 						IAtom atom = mole.getAtom(key);
-						Double shift = new_pred.NMRPrediction1H(mole,atom,solvent,nearestAtomList,attribute);
+						Double shift = NMRPrediction1H(mole,atom,solvent,nearestAtomList,attribute);
 						
 						if(shift != 0.0) {
 							HoseResult.put(key,Double.valueOf(df.format(shift)));
@@ -337,7 +330,7 @@ public class NMRPred {
 		
 		
 	}
-	
+//	
 //	/**
 //	 * Main Function
 //	 * @param args
@@ -346,46 +339,46 @@ public class NMRPred {
 //	public static void main(String[] args) throws Exception{
 //		
 //		
-////		BuildHoseCodeFromFolder bhcff = new BuildHoseCodeFromFolder();
-////		bhcff.Generate1HHoseCode(new File("/Users/xuan/Desktop/Hose1H_sdf_nmr_non_tan_water_solvent"),"Water");
-////		BuildDataSet dbs = new BuildDataSet();
-////		dbs.BuildAsList("/Users/xuan/Desktop/nmrshiftdb2withsignals3DDone.sdf");
+//		BuildHoseCodeFromFolder bhcff = new BuildHoseCodeFromFolder();
+//		bhcff.Generate1HHoseCode(new File("/Users/xuan/Desktop/Hose1H_sdf_nmr_non_tan_water_solvent"),"Water");
+//		BuildDataSet dbs = new BuildDataSet();
+//		dbs.BuildAsList("/Users/xuan/Desktop/nmrshiftdb2withsignals3DDone.sdf");
 //		
 //		
-////		String file = "/Users/xuan/Desktop/nmrshiftdb2withsignals.sdf";
-////		IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
-////		IteratingSDFReader sdfr = new IteratingSDFReader(new FileReader(file),bldr);
-////		NMRPred new_pred = new NMRPred();
-////		String solvent = "water";
-////		while (sdfr.hasNext()) {
-////			IAtomContainer mole = sdfr.next();
-////			HashMap<Integer, Double> HoseResult = new_pred.Retrive13CHoseCode(mole, solvent);
-////			
-////			for(Integer key: HoseResult.keySet()) {
-////				if(HoseResult.get(key) == 0.0) {
-////					// if HoseResult.get(key) == 0.0 means can't find the particular Hose Code 
-////					// try to predict
-////					IAtom atom = mole.getAtom(key);
-////					Double shift = new_pred.NMRPrediction13C(mole,atom,solvent);
-////					if(shift != 0.0) {
-////						HoseResult.put(key,shift);
-////					}
-////				}
-////			}
-////			System.exit(0);
-////		}
-////		
-////		BuildHoseCodeLib build = new BuildHoseCodeLib();
-////		build.BuildAsList(file);
+//		String file = "/Users/xuan/Desktop/nmrshiftdb2withsignals.sdf";
+//		IChemObjectBuilder bldr = SilentChemObjectBuilder.getInstance();
+//		IteratingSDFReader sdfr = new IteratingSDFReader(new FileReader(file),bldr);
+//		NMRPred new_pred = new NMRPred();
+//		String solvent = "water";
+//		while (sdfr.hasNext()) {
+//			IAtomContainer mole = sdfr.next();
+//			HashMap<Integer, Double> HoseResult = new_pred.Retrive13CHoseCode(mole, solvent);
+//			
+//			for(Integer key: HoseResult.keySet()) {
+//				if(HoseResult.get(key) == 0.0) {
+//					// if HoseResult.get(key) == 0.0 means can't find the particular Hose Code 
+//					// try to predict
+//					IAtom atom = mole.getAtom(key);
+//					Double shift = new_pred.NMRPrediction13C(mole,atom,solvent);
+//					if(shift != 0.0) {
+//						HoseResult.put(key,shift);
+//					}
+//				}
+//			}
+//			System.exit(0);
+//		}
 //		
-////		HashMap<Integer,String> map = BuildHoseCodeLib.BuildSolventMap("0:Unreported");
-////		if(map == null) {
-////			System.out.println("unreported");
-////		}else {
-////			for(Integer key: map.keySet()) {
-////				System.out.println(key + "=" + map.get(key));
-////			}
-////		}
+//		BuildHoseCodeLib build = new BuildHoseCodeLib();
+//		build.BuildAsList(file);
+//		
+//		HashMap<Integer,String> map = BuildHoseCodeLib.BuildSolventMap("0:Unreported");
+//		if(map == null) {
+//			System.out.println("unreported");
+//		}else {
+//			for(Integer key: map.keySet()) {
+//				System.out.println(key + "=" + map.get(key));
+//			}
+//		}
 //		
 //	}
 }
