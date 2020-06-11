@@ -239,7 +239,7 @@ public class NMRPred {
 	 * @throws CDKException 
 	 * @throws FileNotFoundException 
 	 */
-	public HashMap<Integer, Double> GetPredictedShift(IAtomContainer mole, String solvent, String atom_type){
+	public HashMap<Integer, Double> GetPredictedShiftWithHoseCode(IAtomContainer mole, String solvent, String atom_type){
 		
 		
 		HashMap<Integer, Double> HoseResult = new HashMap<Integer, Double>();
@@ -248,11 +248,10 @@ public class NMRPred {
 		DecimalFormat df = new DecimalFormat("####.##");
 		try {
 			
-			if(atom_type == "C") {
+			if(atom_type.equals("C")) {
 				
 				String pure_solvent = FormatSolventName(solvent);
 				HoseResult = Retrive13CHoseCode(mole, pure_solvent);
-			
 
 				for(Integer key: HoseResult.keySet()) {
 					if(HoseResult.get(key) == 0.0) {
@@ -266,11 +265,10 @@ public class NMRPred {
 					}
 				}
 			}
-			else if(atom_type == "H") {
+			else if(atom_type.equals("H")) {
 				
 				String pure_solvent = FormatSolventName(solvent);
-				HoseResult = Retrive1HHoseCode(mole, pure_solvent);
-
+				HoseResult = Retrive1HHoseCode(mole, pure_solvent);				
 				for(Integer key: HoseResult.keySet()) {
 					if(HoseResult.get(key) == 0.0) {
 						// if HoseResult.get(key) == 0.0 means can't find the particular Hose Code 
@@ -291,8 +289,11 @@ public class NMRPred {
 			
 		}
 		
-		
-	
+		System.out.println(HoseResult);
+		for(Integer key : HoseResult.keySet()) {
+			
+			System.out.println((String.valueOf(key) + ' ' + String.valueOf(HoseResult.get(key))));
+		}
 		
 		return HoseResult;
 		
@@ -301,7 +302,48 @@ public class NMRPred {
 	
 	
 	/**
-	 * make sure that solvent name is matching the exactly solvent name
+	 * 
+	 * @param mole
+	 * @param solvent
+	 * @param atom_type
+	 * @return
+	 */
+	public HashMap<Integer, Double> GetPredictedShift(IAtomContainer mole, String solvent, String atom_type){
+		HashMap<Integer, Double> HoseResult = new HashMap<Integer, Double>();
+		ArrayList<Attribute> attribute = GenerateAttributeName(116);
+		ArrayList<ArrayList<String>> nearestAtomList = BuildDataSet.getNearestAtoms(mole,3);
+		DecimalFormat df = new DecimalFormat("####.##");
+	
+			
+		if(atom_type.equals("C")) {
+			
+			for(int i = 0; i < mole.getAtomCount(); i++) {
+				IAtom atom = mole.getAtom(i);
+				Double shift = NMRPrediction13C(mole,atom,solvent,nearestAtomList,attribute); 
+				if(shift != 0.0) {
+					HoseResult.put(i, Double.valueOf(df.format(shift)));
+				}
+			}
+			
+		}
+		
+		else if(atom_type.equals("H")) {
+			for(int i = 0; i < mole.getAtomCount(); i++) {
+				IAtom atom = mole.getAtom(i);
+				Double shift = NMRPrediction1H(mole,atom,solvent,nearestAtomList,attribute); 
+				if(shift != 0.0) {
+					HoseResult.put(i, Double.valueOf(df.format(shift)));
+				}
+				
+			}
+		}
+		
+		return HoseResult;
+	}
+	
+	
+	/**
+	 * make sure that solvent name is matching the exactly solvent name in database
 	 * @param solvent
 	 * @return
 	 */

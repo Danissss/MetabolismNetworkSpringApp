@@ -36,126 +36,6 @@ public class SomPrediction {
 	private static HashMap<String, String> som_model_path = CypModelPath();
 
 	/**
-	 * generate the test instance for predicting som
-	 * 
-	 * @param input
-	 * @return
-	 * @throws CDKException
-	 * @throws CloneNotSupportedException
-	 * @throws FileNotFoundException
-	 */
-//	public static Instances create_test_instance(String input) throws CDKException, IOException, CloneNotSupportedException {
-//		
-//		
-//		int nearest_atom = 3;
-//		
-//		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-//		IAtomContainer original_mole = builder.newInstance(IAtomContainer.class);
-//		IAtomContainer molecule_3D = builder.newInstance(IAtomContainer.class);
-////		HashMap<IAtomContainer, Instances> hash_instance = new HashMap<IAtomContainer, Instances>();
-////		ArrayList<Instance> instance_list = new ArrayList<Instance>();
-//		
-//	    // check if the input is sdf // or smiles;
-//	    if(input.contains(".sdf") || input.contains(".mol")) {
-//	    		original_mole = read_SDF_file(input);
-//	    }else {
-//	    		SmilesParser temp_smiles = new SmilesParser(builder);
-//		 	IAtomContainer atom_container = temp_smiles.parseSmiles(input);
-//		 	AtomContainerManipulator.suppressHydrogens(atom_container);
-//			AtomContainerManipulator.convertImplicitToExplicitHydrogens(atom_container);
-//		
-//		 	StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-//			sdg.setMolecule(atom_container);
-//			sdg.generateCoordinates();
-//			original_mole = sdg.getMolecule();
-//			
-//			
-//			ModelBuilder3D mb3d = ModelBuilder3D.getInstance(builder);
-//			molecule_3D = mb3d.generate3DCoordinates(original_mole, false);
-//	    }
-//
-//	    
-//	    
-//	    
-//	    IAtomContainer mole = AtomContainerManipulator.removeHydrogens(molecule_3D);
-//	    
-//	    ArrayList<Attribute> attribute_name = generate_attribute_name(nearest_atom+1, 29); 
-//	     
-//	    FastVector<String> association = new FastVector<String>();
-//	    association.addElement("Yes");
-//		association.addElement("No");
-//		Attribute class_attribute = new Attribute("Class",association);
-//		attribute_name.add(class_attribute);
-//		 
-//		Instances test_instance = new Instances("Rel",attribute_name,mole.getAtomCount());
-//		
-//		test_instance.setClassIndex(class_attribute.index());
-//	    
-//		// getNearestAtoms may only works for 3d mol structure
-//	    ArrayList<ArrayList<String>> all_nearest_atom_set = GetAtomicDescriptors.getNearestAtoms(mole);
-//	    
-//	    int num_atom = mole.getAtomCount();
-//		for(int atoms = 0; atoms < num_atom; atoms++) {
-//			
-//			
-//		}
-//		
-//		for(int k = 0; k< num_atom; k++) {
-//
-//			
-//			// iterate each instance;
-//			// convert each instance to weka instance;
-//			
-//			ArrayList<String> nearest_atom_set = all_nearest_atom_set.get(k);   // get index of atom but need to minus 1 because of chemsketch
-//			List<IAtom> atoms_set = new ArrayList<IAtom>();
-//			
-//			// add the # nearest atom into atom list for extract the atom descriptor;
-//			atoms_set.add(mole.getAtom(k));  									// add the original atoms
-//			for(int nna = 0; nna < nearest_atom; nna++) {
-//				IAtom tmp_atom = mole.getAtom(Integer.parseInt(nearest_atom_set.get(nna)));
-//				atoms_set.add(tmp_atom);
-//			}
-//			
-//			ArrayList<Double[]> descriptor_value = GetAtomicDescriptors.getAtomicDescriptor(mole,atoms_set, "");
-//
-//			
-//			ArrayList<String> single_instance_value = new ArrayList<String>();
-//			for(int dv = 0; dv < descriptor_value.size(); dv++) {
-//				for (int dv2 = 0; dv2<descriptor_value.get(dv).length; dv2++) {
-//					single_instance_value.add(Double.toString(descriptor_value.get(dv)[dv2]));
-//				}
-//			}
-//			
-//			single_instance_value.add("No");
-//			
-//			
-//			// feature_set is for each temp feature.
-//			int num_of_attribute = test_instance.numAttributes();
-//			Instance feature_set = new DenseInstance(num_of_attribute); 
-//    		 
-//    		 	for(int f=0; f < num_of_attribute; f++) {
-//    		 		Attribute tmp_attr = attribute_name.get(f);
-//    		 		if(tmp_attr.isNumeric()) {
-//    		 			feature_set.setValue(tmp_attr,Double.parseDouble(single_instance_value.get(f)));
-////    		 			feature_set.setValue(tmp_attr, single_instance_value.get(f));
-//    		 		}else if (tmp_attr.isNominal()) {
-//    		 			feature_set.setValue(tmp_attr, single_instance_value.get(f));
-//    		 		}
-//    			 
-//    		 	}
-//    		 
-//    		 	test_instance.add(feature_set);
-//			
-//		}
-//		test_instance.instance(0).setClassMissing();
-////		System.out.println(test_instance.instance(0).toString());
-////		System.exit(0);
-//		return test_instance;
-//		
-//		
-//	}
-
-	/**
 	 * This function takes IAtomContainer as input
 	 * 
 	 * @param molecule_3D
@@ -206,15 +86,6 @@ public class SomPrediction {
 				IAtom tmp_atom = mole.getAtom(Integer.parseInt(nearest_atom_set.get(nna)));
 				atoms_set.add(tmp_atom);
 			}
-
-//			ArrayList<Double[]> descriptor_value = GetAtomicDescriptors.getAtomicDescriptor(mole, atoms_set, "");
-//			System.out.println(descriptor_value.size()); // => 0 in production
-//			ArrayList<Double> single_instance_value = new ArrayList<Double>();
-//			for (int dv = 0; dv < descriptor_value.size(); dv++) {
-//				for (int dv2 = 0; dv2 < descriptor_value.get(dv).length; dv2++) {
-//					single_instance_value.add(descriptor_value.get(dv)[dv2]);
-//				}
-//			}
 			
 			ArrayList<Double> single_instance_value = new ArrayList<Double>();
 			try {
@@ -244,8 +115,6 @@ public class SomPrediction {
 
 		}
 		test_instance.instance(0).setClassMissing();
-//		System.out.println(test_instance.instance(0).toString());
-//		System.exit(0);
 		return test_instance;
 
 	}

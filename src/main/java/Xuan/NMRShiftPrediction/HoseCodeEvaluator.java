@@ -16,7 +16,6 @@ public class HoseCodeEvaluator {
 	
 	HoseDB hosedb = new HoseDB();
 	Connection conn = hosedb.ConnectToDB();
-	GenerateHoseCode GHC = new GenerateHoseCode();
 	
 	/**
 	 * given solvent and sphere, try to get the matching hose code
@@ -34,7 +33,7 @@ public class HoseCodeEvaluator {
 		
 		// max sphere 6; min sphere 3
 		for(int sphere = 6; sphere >= 3; sphere--) {
-			String hoseCode = GHC.GetHoseCodesForMolecule(mole, atom, aromatic,sphere);
+			String hoseCode = GenerateHoseCode.GetHoseCodesForMolecule(mole, atom, aromatic,sphere);
 			Double shift = hosedb.FindMatchingHoseCode(hoseCode,solvent,sphere,conn,"13C");
 			
 			// if find any, should return the shift value at this point;
@@ -65,7 +64,7 @@ public class HoseCodeEvaluator {
 		
 		// max sphere 6; min sphere 3
 		for(int sphere = 6; sphere >= 3; sphere--) {
-			String hoseCode = GHC.GetHoseCodesForMolecule(mole, atom, aromatic,sphere);
+			String hoseCode = GenerateHoseCode.GetHoseCodesForMolecule(mole, atom, aromatic,sphere);
 			Double shift = hosedb.FindMatchingHoseCode(hoseCode,solvent,sphere,conn,"1H");
 			
 			// if find any, should return the shift value at this point;

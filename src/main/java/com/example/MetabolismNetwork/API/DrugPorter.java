@@ -21,8 +21,13 @@ import weka.core.Instances;
 public class DrugPorter {
 	
 	private  ArrayList<String> available_transporter = getAvailablePorter();
+	private  ArrayList<String> available_role = getAvailableRole();
 	
-	@PostMapping(path = "/drugporter/")
+	
+//	localhost:8080/api/drugporter?structure=CCCCCCC&transporter=MDR1&role=substrate
+//	Couldn't test on Mac because the python script is compiled at Linux (try it at vm)
+	
+	@PostMapping(path = "/drugporter")
 	@ResponseStatus(code = HttpStatus.OK)
     public Map<String, Object> generateStructure(@RequestParam("structure") String structure, 
     		@RequestParam("transporter") String transporter, @RequestParam("role") String role) {
@@ -34,7 +39,7 @@ public class DrugPorter {
 			return json;
 		}
 		
-		if(role != "substrate" && role != "inhibitor") {
+		if(!available_role.contains(role)) {
 			json.put("Error", "Role not covered. Available role include: substrate, inhibitor.");
 			return json;
 		}
@@ -67,6 +72,12 @@ public class DrugPorter {
 		return port;
 	}
 	
+	private ArrayList<String> getAvailableRole(){
+		ArrayList<String> role = new ArrayList<String>();
+		role.add("substrate");
+		role.add("inhibitor");
+		return role;
+	}
 	
 	
 }

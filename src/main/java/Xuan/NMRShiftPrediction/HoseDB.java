@@ -144,12 +144,14 @@ public class HoseDB {
 	/**
 	 * connect to db
 	 * @return
+	 * @throws ClassNotFoundException 
 	 */
 	public Connection ConnectToDB() {
 		
+		
 		try{
-			 Connection conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s/HoseDB/%s", current_dir, DbName));
-			 return conn;
+			Connection conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s/HoseDB/%s", current_dir, DbName));
+			return conn;
 		}catch (Exception e) {
 			e.printStackTrace();
 			

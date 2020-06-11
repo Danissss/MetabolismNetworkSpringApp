@@ -106,6 +106,7 @@ public class RunClassification {
 		// System.out.println("Enter CreateTestingInstance Function");
 		
 		ArrayList<Double> descriptorValue = GetRawInput(option,input);
+		System.out.println(descriptorValue);
 		int descriptorValueLength = descriptorValue.size();
 		ArrayList<Attribute> attribute_al = GenerateAttributeName(descriptorValueLength);
 		

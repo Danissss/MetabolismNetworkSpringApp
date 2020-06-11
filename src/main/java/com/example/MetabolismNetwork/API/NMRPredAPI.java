@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.MetabolismNetwork.Helper.SiteOfMetabolismHelper;
+
 import Cheminformatics.Utilities.structureValidation;
 import Xuan.NMRShiftPrediction.NMRPred;
 
@@ -26,14 +28,15 @@ public class NMRPredAPI {
 	
 	
 	private  ArrayList<String> available_solvent = getAvailableSolvent();
+	private  ArrayList<String> available_proton  = getAvailableProton();
 	
-	@PostMapping(path = "/nmrpred/")
+	@PostMapping(path = "/nmrpred")
 	@ResponseStatus(code = HttpStatus.OK)
     public Map<String, Object> generateStructure(@RequestParam("structure") String structure, 
     		@RequestParam("solvent") String solvent, @RequestParam("proton") String proton) {
 		
 		Map<String, Object> json = new LinkedHashMap<String, Object>();
-		if(proton != "H" || proton != "C") {
+		if(!available_proton.contains(proton)) {
 			json.put("Error", "Proton not covered. Available proton include: H, C.");
 			return json;
 		}
@@ -53,11 +56,14 @@ public class NMRPredAPI {
 		IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
 		SmilesParser smipar = new SmilesParser(bldr);
 		NMRPred nmpred = new NMRPred();
+		SiteOfMetabolismHelper mol3dgenerator = new SiteOfMetabolismHelper();
 	
 		try {
 			IAtomContainer mole = smipar.parseSmiles(structure);
-			HashMap<Integer, Double> shifts = nmpred.GetPredictedShift(mole, solvent, proton);
+			IAtomContainer mole3d = mol3dgenerator.Get3DConfirmationCDK(mole);
+			HashMap<Integer, Double> shifts = nmpred.GetPredictedShift(mole3d, solvent, proton);
 			for(Integer key : shifts.keySet()) {
+				
 				json.put(String.valueOf(key), String.valueOf(shifts.get(key)));
 			}
 		} catch (InvalidSmilesException e) {
@@ -79,5 +85,11 @@ public class NMRPredAPI {
 		solvent.add("Water");
 		return solvent;
 	}
-
+	
+	private ArrayList<String> getAvailableProton(){
+		ArrayList<String> proton = new ArrayList<String>();
+		proton.add("H");
+		proton.add("C");
+		return proton;
+	}
 }

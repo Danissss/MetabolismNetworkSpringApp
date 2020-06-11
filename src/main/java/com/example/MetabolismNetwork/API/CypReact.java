@@ -26,7 +26,14 @@ public class CypReact {
 	private  ArrayList<String> available_protein = getAvailableProtein();
 	private  String supportFoldPath = String.format("%s/", System.getProperty("user.dir"));
 	
-	@PostMapping(path = "/cypreact/")
+	
+//	Sample request and response
+//	localhost:8080/api/cypreact?structure=CCCCCC&protein=CYP1A2
+//	{
+//		"1A2": "Non-Reactant"
+//	}
+	
+	@PostMapping(path = "/cypreact")
 	@ResponseStatus(code = HttpStatus.OK)
     public Map<String, Object> generateStructure(@RequestParam("structure") String structure, 
     		@RequestParam("protein") String protein) {
@@ -53,7 +60,11 @@ public class CypReact {
 				ArrayList<HashMap<String,String>> temp_cypreact_result = CypReact.RunClassification(supportFoldPath,testinstance, protein, inputMolecule);
 				if(temp_cypreact_result != null && temp_cypreact_result.size() > 0) {
 					for(String key : temp_cypreact_result.get(0).keySet()) {
-						json.put(key, temp_cypreact_result.get(0).get(key));
+						if(temp_cypreact_result.get(0).get(key) == "N") {
+							json.put(key, "Non-Reactant");
+						}else if(temp_cypreact_result.get(0).get(key) == "R") {
+							json.put(key, "Reactant");
+						}
 					}
 				}
 			}

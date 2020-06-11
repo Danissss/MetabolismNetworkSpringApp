@@ -33,8 +33,12 @@ public class SOMPred {
 	private ArrayList<String> available_protein = getAvailableProtein();
 	private String current_dir = System.getProperty("user.dir");
 	
+//	localhost:8080/api/sompred?structure=CCCCCCC&protein=CYP1A2
+//	{
+//    "0": "No"
+//  }
 	
-	@PostMapping(path = "/sompred/")
+	@PostMapping(path = "/sompred")
 	@ResponseStatus(code = HttpStatus.OK)
     public Map<String, Object> generateStructure(@RequestParam("structure") String structure, 
     		@RequestParam("protein") String protein) throws InvalidSmilesException {
